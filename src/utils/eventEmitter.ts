@@ -28,6 +28,11 @@ export class MarketUpdateEvent {
   }
 }
 
+export class CacheClearEvent {
+  static type = "CacheUpdate";
+  constructor() {}
+}
+
 export class EventEmitter {
   private emitter = new Emitter();
 
@@ -56,5 +61,9 @@ export class EventEmitter {
 
   raiseCacheDeleted(id: string) {
     this.emitter.emit(CacheDeleteEvent.type, new CacheDeleteEvent(id));
+  }
+
+  raiseCacheCleared() {
+    this.emitter.emit(CacheClearEvent.type, new CacheClearEvent());
   }
 }
