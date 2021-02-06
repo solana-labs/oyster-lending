@@ -83,5 +83,11 @@ export function useWallet() {
     providerUrl: context.providerUrl,
     setProvider: context.setProviderUrl,
     providerName: context.providerName,
+    connect () {
+      return context.wallet.connect();
+    },
+    disconnect () {
+      return context.wallet.disconnect();
+    },
   };
 }

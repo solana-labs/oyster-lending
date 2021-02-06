@@ -7,12 +7,12 @@ import { LABELS } from "./../../constants";
 export const ConnectButton = (
   props: ButtonProps & React.RefAttributes<HTMLElement>
 ) => {
-  const { wallet, connected } = useWallet();
+  const { connected, connect } = useWallet();
   const { onClick, children, disabled, ...rest } = props;
   return (
     <Button
       {...rest}
-      onClick={connected ? onClick : wallet.connect}
+      onClick={connected ? onClick : connect}
       disabled={connected && disabled}
     >
       {connected ? props.children : LABELS.CONNECT_LABEL}
