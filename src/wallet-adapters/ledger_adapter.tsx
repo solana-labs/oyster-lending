@@ -5,7 +5,7 @@ import EventEmitter from "eventemitter3";
 import { PublicKey } from "@solana/web3.js";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import { notify } from "./../utils/notifications";
-import { getPublicKey, signBytes, signTransaction } from './ledger';
+import { getPublicKey, signTransaction } from './ledger';
 
 export class LedgerAdapter extends EventEmitter {
   _connecting: boolean;
