@@ -3,6 +3,7 @@ import Wallet from "@project-serum/sol-wallet-adapter";
 import { notify } from "./../utils/notifications";
 import { useConnectionConfig } from "./connection";
 import { useLocalStorageState } from "./../utils/utils";
+import { LedgerAdapter } from "./../wallet-adapters/ledger_adapter";
 import { SolongAdapter } from "./../wallet-adapters/solong_adapter";
 
 export const WALLET_PROVIDERS = [
@@ -10,6 +11,7 @@ export const WALLET_PROVIDERS = [
   { name: "solongwallet.com", url: "http://solongwallet.com" },
   { name: "solflare.com", url: "https://solflare.com/access-wallet" },
   { name: "mathwallet.org", url: "https://www.mathwallet.org" },
+  { name: "Ledger Wallet", url: "https://www.ledger.com" },
 ];
 
 const WalletContext = React.createContext<any>(null);
@@ -23,6 +25,9 @@ export function WalletProvider({ children = null as any }) {
   const wallet = useMemo(() => {
     if (providerUrl === "http://solongwallet.com") {
       return new SolongAdapter(providerUrl, endpoint);
+    }
+    else if (providerUrl === "https://www.ledger.com") {
+      return new LedgerAdapter(providerUrl, endpoint);
     } else {
       return new Wallet(providerUrl, endpoint);
     }
