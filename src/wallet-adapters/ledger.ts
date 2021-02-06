@@ -1,6 +1,3 @@
-// modified from https://github.com/project-serum/spl-token-wallet/blob/master/src/utils/walletProvider/ledger-core.js
-// @TODO: check license for ^
-
 import type Transport from "@ledgerhq/hw-transport";
 import type { Transaction } from "@solana/web3.js";
 
@@ -81,7 +78,8 @@ export async function signBytes(transport: Transport, bytes: Buffer, derivationP
 
   const payload = Buffer.concat([numPaths, derivationPath, bytes]);
 
-  // must enable blind signing in Solana Ledger App per https://github.com/project-serum/spl-token-wallet/issues/71
+  // @FIXME: must enable blind signing in Solana Ledger App per https://github.com/project-serum/spl-token-wallet/issues/71
+  // See also https://github.com/project-serum/spl-token-wallet/pull/23#issuecomment-712317053
   return ledgerSend(transport, INS_SIGN_MESSAGE, P1_CONFIRM, payload);
 }
 

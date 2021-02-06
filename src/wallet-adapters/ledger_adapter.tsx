@@ -1,6 +1,3 @@
-// some code from https://github.com/project-serum/spl-token-wallet/blob/master/src/utils/walletProvider/ledger.js
-// @TODO: check license for ^
-
 import type Transport from "@ledgerhq/hw-transport";
 import type { Transaction } from "@solana/web3.js";
 
@@ -27,7 +24,6 @@ export class LedgerAdapter extends EventEmitter {
   }
 
   async signTransaction(transaction: Transaction) {
-    // @TODO: check convention for when to notify or throw
     if (!this._transport || !this._publicKey) {
       throw new Error("Not connected to Ledger")
     }
@@ -55,7 +51,6 @@ export class LedgerAdapter extends EventEmitter {
       this.emit("connect", this._publicKey);
     }
     catch (error) {
-      // @TODO: check convention for when to notify or throw
       notify({
         message: "Ledger Error",
         description: error.message,
