@@ -11,6 +11,7 @@ import { notify } from "./../utils/notifications";
 import { ExplorerLink } from "../components/ExplorerLink";
 import LocalTokens from "../config/tokens.json";
 import { setProgramIds } from "../utils/ids";
+import { cache } from "./accounts";
 
 export type ENV =
   | "mainnet-beta"
@@ -89,6 +90,7 @@ export function ConnectionProvider({ children = undefined as any }) {
   const [tokens, setTokens] = useState<KnownToken[]>([]);
   const [tokenMap, setTokenMap] = useState<Map<string, KnownToken>>(new Map());
   useEffect(() => {
+    cache.clear();
     // fetch token files
     window
       .fetch(
