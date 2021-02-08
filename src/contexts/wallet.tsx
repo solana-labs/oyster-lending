@@ -3,8 +3,8 @@ import Wallet from "@project-serum/sol-wallet-adapter";
 import { notify } from "./../utils/notifications";
 import { useConnectionConfig } from "./connection";
 import { useLocalStorageState } from "./../utils/utils";
-import { LedgerAdapter } from "./../wallet-adapters/ledger_adapter";
-import { SolongAdapter } from "./../wallet-adapters/solong_adapter";
+import { LedgerWalletAdapter } from "../wallet-adapters/ledger";
+import { SolongWalletAdapter } from "../wallet-adapters/solong";
 
 export const WALLET_PROVIDERS = [
   { name: "sollet.io", url: "https://www.sollet.io" },
@@ -24,10 +24,10 @@ export function WalletProvider({ children = null as any }) {
   );
   const wallet = useMemo(() => {
     if (providerUrl === "http://solongwallet.com") {
-      return new SolongAdapter(providerUrl, endpoint);
+      return new SolongWalletAdapter();
     }
     else if (providerUrl === "https://www.ledger.com") {
-      return new LedgerAdapter(providerUrl, endpoint);
+      return new LedgerWalletAdapter();
     } else {
       return new Wallet(providerUrl, endpoint);
     }

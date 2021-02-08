@@ -4,15 +4,15 @@ import type { Transaction } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 import { PublicKey } from "@solana/web3.js";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
-import { notify } from "./../utils/notifications";
-import { getPublicKey, signTransaction } from './ledger';
+import { notify } from "../../utils/notifications";
+import { getPublicKey, signTransaction } from './core';
 
-export class LedgerAdapter extends EventEmitter {
+export class LedgerWalletAdapter extends EventEmitter {
   _connecting: boolean;
   _publicKey: PublicKey | null;
   _transport: Transport | null;
 
-  constructor(providerUrl: string, network: string) {
+  constructor() {
     super();
     this._connecting = false;
     this._publicKey  = null;

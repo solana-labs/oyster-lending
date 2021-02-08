@@ -43,10 +43,6 @@ async function ledgerSend(transport: Transport, instruction: number, p1: number,
   return reply.slice(0, reply.length - 2);
 }
 
-async function ledgerGetPublicKey(transport: Transport, derivationPath: Buffer) {
-  return ledgerSend(transport, INS_GET_PUBKEY, P1_CONFIRM, derivationPath);
-}
-
 const BIP32_HARDENED_BIT = (1 << 31) >>> 0;
 function harden(n: number) {
   return (n | BIP32_HARDENED_BIT) >>> 0;
@@ -84,7 +80,7 @@ export async function signBytes(transport: Transport, bytes: Buffer, derivationP
 }
 
 export async function getPublicKey(transport: Transport, derivationPath: Buffer = getSolanaDerivationPath()) {
-  const publicKeyBytes = await ledgerGetPublicKey(transport, derivationPath);
+  const publicKeyBytes = await ledgerSend(transport, INS_GET_PUBKEY, P1_NON_CONFIRM, derivationPath);
 
   return new PublicKey(publicKeyBytes);
 }
