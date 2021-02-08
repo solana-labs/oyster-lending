@@ -1,10 +1,10 @@
 import React from "react";
-import { Select } from "antd";
+import { Button, Select } from 'antd';
 import { ENDPOINTS, useConnectionConfig } from "../../contexts/connection";
-import { useWallet, WALLET_PROVIDERS } from "../../contexts/wallet";
+import { useWallet } from "../../contexts/wallet";
 
 export const Settings = () => {
-  const { providerUrl, setProvider } = useWallet();
+  const { select } = useWallet();
   const { endpoint, setEndpoint } = useConnectionConfig();
 
   return (
@@ -14,7 +14,7 @@ export const Settings = () => {
         <Select
           onSelect={setEndpoint}
           value={endpoint}
-          style={{ marginRight: 8 }}
+          style={{ marginBottom: 20 }}
         >
           {ENDPOINTS.map(({ name, endpoint }) => (
             <Select.Option value={endpoint} key={endpoint}>
@@ -22,16 +22,7 @@ export const Settings = () => {
             </Select.Option>
           ))}
         </Select>
-      </div>
-      <div style={{ display: "grid" }}>
-        Wallet:{" "}
-        <Select onSelect={setProvider} value={providerUrl}>
-          {WALLET_PROVIDERS.map(({ name, url }) => (
-            <Select.Option value={url} key={url}>
-              {name}
-            </Select.Option>
-          ))}
-        </Select>
+        <Button type="primary" onClick={select}>Select Wallet</Button>
       </div>
     </>
   );

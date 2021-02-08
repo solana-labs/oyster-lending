@@ -32,10 +32,11 @@ import {
   initObligationInstruction,
 } from "../models";
 import { toLamports } from "../utils/utils";
+import { WalletAdapter } from "../contexts/wallet";
 
 export const borrow = async (
   connection: Connection,
-  wallet: any,
+  wallet: WalletAdapter,
 
   from: TokenAccount,
   amount: number,
@@ -49,6 +50,10 @@ export const borrow = async (
 
   obligationAccount?: PublicKey
 ) => {
+  if (!wallet.publicKey) {
+    throw new Error('Wallet is not connected');
+  }
+
   notify({
     message: "Borrowing funds...",
     description: "Please review transactions to approve.",

@@ -12,6 +12,10 @@ export const FaucetView = () => {
   const { wallet } = useWallet();
 
   const airdrop = useCallback(() => {
+    if (!wallet?.publicKey) {
+        return;
+    }
+
     connection
       .requestAirdrop(wallet.publicKey, 2 * LAMPORTS_PER_SOL)
       .then(() => {
@@ -20,7 +24,7 @@ export const FaucetView = () => {
           type: "success",
         });
       });
-  }, [wallet, connection]);
+  }, [wallet, wallet?.publicKey, connection]);
 
   const bodyStyle: React.CSSProperties = {
     display: "flex",

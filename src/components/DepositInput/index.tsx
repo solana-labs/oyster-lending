@@ -43,6 +43,10 @@ export const DepositInput = (props: {
   const { value, setValue, pct, setPct, type } = useSliderInput(convert);
 
   const onDeposit = useCallback(() => {
+    if (!wallet?.publicKey) {
+      return;
+    }
+
     setPendingTx(true);
 
     (async () => {

@@ -4,15 +4,16 @@ import {
   PublicKey,
   TransactionInstruction,
 } from "@solana/web3.js";
+import { AccountLayout } from "@solana/spl-token";
 import { sendTransaction } from "../contexts/connection";
-import { notify } from "../utils/notifications";
+import {WalletAdapter} from "../contexts/wallet";
 import {
   accrueInterestInstruction,
   LendingReserve,
   withdrawInstruction,
-} from "./../models/lending";
-import { AccountLayout } from "@solana/spl-token";
+} from "../models/lending";
 import { LENDING_PROGRAM_ID } from "../utils/ids";
+import { notify } from "../utils/notifications";
 import { findOrCreateAccountByMint } from "./account";
 import { approve, TokenAccount } from "../models";
 
@@ -22,8 +23,12 @@ export const withdraw = async (
   reserve: LendingReserve,
   reserveAddress: PublicKey,
   connection: Connection,
-  wallet: any
+  wallet: WalletAdapter
 ) => {
+  if (!wallet.publicKey) {
+    throw new Error('Wallet is not connected');
+  }
+
   notify({
     message: "Withdrawing funds...",
     description: "Please review transactions to approve.",

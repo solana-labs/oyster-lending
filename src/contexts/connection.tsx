@@ -11,6 +11,7 @@ import { notify } from "./../utils/notifications";
 import { ExplorerLink } from "../components/ExplorerLink";
 import LocalTokens from "../config/tokens.json";
 import { setProgramIds } from "../utils/ids";
+import { WalletAdapter } from "./wallet";
 
 export type ENV =
   | "mainnet-beta"
@@ -217,11 +218,15 @@ const getErrorForTransaction = async (connection: Connection, txid: string) => {
 
 export const sendTransaction = async (
   connection: Connection,
-  wallet: any,
+  wallet: WalletAdapter,
   instructions: TransactionInstruction[],
   signers: Account[],
   awaitConfirmation = true
 ) => {
+  if (!wallet?.publicKey) {
+    throw new Error('Wallet is not connected');
+  }
+
   let transaction = new Transaction();
   instructions.forEach((instruction) => transaction.add(instruction));
   transaction.recentBlockhash = (

@@ -4,10 +4,11 @@ import type { Transaction } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 import { PublicKey } from "@solana/web3.js";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
+import { WalletAdapter } from "../../contexts/wallet";
 import { notify } from "../../utils/notifications";
 import { getPublicKey, signTransaction } from './core';
 
-export class LedgerWalletAdapter extends EventEmitter {
+export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
   _connecting: boolean;
   _publicKey: PublicKey | null;
   _transport: Transport | null;

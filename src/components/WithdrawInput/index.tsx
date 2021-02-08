@@ -52,6 +52,10 @@ export const WithdrawInput = (props: {
   const { value, setValue, pct, setPct, type } = useSliderInput(convert);
 
   const onWithdraw = useCallback(() => {
+    if (!wallet?.publicKey) {
+      return;
+    }
+
     setPendingTx(true);
 
     (async () => {
@@ -94,6 +98,7 @@ export const WithdrawInput = (props: {
     type,
     value,
     wallet,
+    wallet?.publicKey
   ]);
 
   const bodyStyle: React.CSSProperties = {

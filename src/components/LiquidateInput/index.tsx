@@ -62,7 +62,7 @@ export const LiquidateInput = (props: {
   const { value, setValue, pct, setPct, type } = useSliderInput(convert);
 
   const onLiquidate = useCallback(() => {
-    if (!withdrawReserve) {
+    if (!withdrawReserve || !wallet?.publicKey) {
       return;
     }
 
