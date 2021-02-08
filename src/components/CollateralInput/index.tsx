@@ -90,6 +90,7 @@ export default function CollateralInput(props: {
   ) {
     const address = filteredReserveAccounts[0].pubkey.toBase58();
     setCollateralReserve(address);
+    props.onCollateralReserve?.(address);
   }
   const renderReserveAccounts = filteredReserveAccounts.map((reserve) => {
     const mint = reserve.info.liquidityMint.toBase58();
