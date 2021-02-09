@@ -7,7 +7,7 @@ import { Settings } from "../Settings";
 import { LABELS } from "../../constants";
 
 export const AppBar = (props: { left?: JSX.Element; right?: JSX.Element }) => {
-  const { connected, wallet } = useWallet();
+  const { connected, connect, disconnect } = useWallet();
 
   const TopBar = (
     <div className="App-Bar-right">
@@ -17,7 +17,7 @@ export const AppBar = (props: { left?: JSX.Element; right?: JSX.Element }) => {
           <Button
             type="text"
             size="large"
-            onClick={connected ? wallet.disconnect : wallet.connect}
+            onClick={connected ? disconnect : connect}
             style={{ color: "#2abdd2" }}
           >
             {LABELS.CONNECT_BUTTON}

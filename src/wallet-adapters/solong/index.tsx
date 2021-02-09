@@ -1,11 +1,11 @@
 import EventEmitter from "eventemitter3";
 import { PublicKey } from "@solana/web3.js";
-import { notify } from "./../utils/notifications";
+import { notify } from "../../utils/notifications";
 
-export class SolongAdapter extends EventEmitter {
+export class SolongWalletAdapter extends EventEmitter {
   _publicKey: any;
   _onProcess: boolean;
-  constructor(providerUrl: string, network: string) {
+  constructor() {
     super();
     this._publicKey = null;
     this._onProcess = false;

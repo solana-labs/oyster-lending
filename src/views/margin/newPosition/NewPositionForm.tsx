@@ -98,7 +98,7 @@ export default function NewPositionForm({
     newPosition
   );
   useLeverage({ newPosition, setNewPosition });
-  const { wallet, connected } = useWallet();
+  const { connected, connect } = useWallet();
 
   return (
     <Card
@@ -207,7 +207,7 @@ export default function NewPositionForm({
               className="trade-button"
               type="primary"
               size="large"
-              onClick={connected ? null : wallet.connect}
+              onClick={connected ? undefined : connect}
               style={{ width: "100%" }}
               disabled={connected && !!newPosition.error}
             >
