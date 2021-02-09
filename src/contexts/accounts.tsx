@@ -262,6 +262,11 @@ export const cache = {
     mintCache.set(id, mint);
     return mint;
   },
+  clear: () => {
+    genericCache.clear();
+    mintCache.clear();
+    cache.emitter.raiseCacheCleared();
+  },
 };
 
 export const useAccountsContext = () => {

@@ -40,7 +40,7 @@ export const deposit = async (
     type: "warn",
   });
 
-  const isInitalized = true; // TODO: finish reserve init
+  const isInitialized = true; // TODO: finish reserve init
 
   // user from account
   const signers: Account[] = [];
@@ -77,7 +77,7 @@ export const deposit = async (
   signers.push(transferAuthority);
 
   let toAccount: PublicKey;
-  if (isInitalized) {
+  if (isInitialized) {
     // get destination account
     toAccount = await findOrCreateAccountByMint(
       wallet.publicKey,
@@ -97,7 +97,7 @@ export const deposit = async (
     );
   }
 
-  if (isInitalized) {
+  if (isInitialized) {
     instructions.push(accrueInterestInstruction(reserveAddress));
 
     // deposit

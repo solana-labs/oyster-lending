@@ -72,6 +72,16 @@ export const PROGRAM_IDS = [
 ];
 
 export const setProgramIds = (envName: string) => {
+  if (envName === "mainnet-beta") {
+    LENDING_PROGRAM_ID = new PublicKey(
+      "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi"
+    );
+  } else if (envName === "Lending") {
+    LENDING_PROGRAM_ID = new PublicKey(
+      "TokenLending1111111111111111111111111111111"
+    );
+  }
+
   let instance = PROGRAM_IDS.find((env) => env.name === envName);
   if (!instance) {
     return;
@@ -82,12 +92,6 @@ export const setProgramIds = (envName: string) => {
   SWAP_PROGRAM_ID = swap.current.pubkey;
   SWAP_PROGRAM_LAYOUT = swap.current.layout;
   SWAP_PROGRAM_LEGACY_IDS = swap.legacy;
-
-  if (envName === "mainnet-beta") {
-    LENDING_PROGRAM_ID = new PublicKey(
-      "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi"
-    );
-  }
 };
 
 export const programIds = () => {
