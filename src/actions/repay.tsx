@@ -16,6 +16,7 @@ import { LENDING_PROGRAM_ID, TOKEN_PROGRAM_ID } from "../utils/ids";
 import { createTokenAccount, findOrCreateAccountByMint } from "./account";
 import { approve, LendingObligation, TokenAccount } from "../models";
 import { ParsedAccount } from "../contexts/accounts";
+import { WalletAdapter } from "../contexts/wallet";
 
 export const repay = async (
   from: TokenAccount,
@@ -31,8 +32,12 @@ export const repay = async (
   withdrawReserve: ParsedAccount<LendingReserve>,
 
   connection: Connection,
-  wallet: any
+  wallet: WalletAdapter
 ) => {
+  if (!wallet.publicKey) {
+    throw new Error('Wallet is not connected');
+  }
+
   notify({
     message: "Repaying funds...",
     description: "Please review transactions to approve.",

@@ -25,10 +25,11 @@ import {
   TokenAccount,
 } from "../models";
 import { cache, ParsedAccount } from "../contexts/accounts";
+import { WalletAdapter } from "../contexts/wallet";
 
 export const liquidate = async (
   connection: Connection,
-  wallet: any,
+  wallet: WalletAdapter,
   from: TokenAccount, // liquidity account
   amountLamports: number, // in liquidty token (lamports)
 
@@ -39,6 +40,10 @@ export const liquidate = async (
 
   withdrawReserve: ParsedAccount<LendingReserve>
 ) => {
+  if (!wallet.publicKey) {
+    throw new Error('Wallet is not connected');
+  }
+
   notify({
     message: "Repaying funds...",
     description: "Please review transactions to approve.",

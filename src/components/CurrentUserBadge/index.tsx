@@ -9,7 +9,7 @@ export const CurrentUserBadge = (props: {}) => {
   const { wallet } = useWallet();
   const { account } = useNativeAccount();
 
-  if (!wallet || !wallet.publicKey) {
+  if (!wallet?.publicKey) {
     return null;
   }
 
@@ -23,7 +23,7 @@ export const CurrentUserBadge = (props: {}) => {
       <div className="wallet-key">
         {shortenAddress(`${wallet.publicKey}`)}
         <Identicon
-          address={wallet.publicKey?.toBase58()}
+          address={wallet.publicKey.toBase58()}
           style={{ marginLeft: "0.5rem", display: "flex" }}
         />
       </div>

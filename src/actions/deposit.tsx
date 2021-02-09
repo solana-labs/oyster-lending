@@ -20,6 +20,7 @@ import {
   findOrCreateAccountByMint,
 } from "./account";
 import { approve, TokenAccount } from "../models";
+import { WalletAdapter } from "../contexts/wallet";
 
 export const deposit = async (
   from: TokenAccount,
@@ -27,8 +28,12 @@ export const deposit = async (
   reserve: LendingReserve,
   reserveAddress: PublicKey,
   connection: Connection,
-  wallet: any
+  wallet: WalletAdapter
 ) => {
+  if (!wallet.publicKey) {
+    throw new Error('Wallet is not connected');
+  }
+
   notify({
     message: "Depositing funds...",
     description: "Please review transactions to approve.",

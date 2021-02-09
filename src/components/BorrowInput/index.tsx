@@ -131,7 +131,7 @@ export const BorrowInput = (props: {
     collateralReserve?.info.collateralMint
   );
   const onBorrow = useCallback(() => {
-    if (!collateralReserve) {
+    if (!collateralReserve || !wallet?.publicKey) {
       return;
     }
 

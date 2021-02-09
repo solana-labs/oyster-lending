@@ -332,15 +332,19 @@ const UseNativeAccount = () => {
 
   const updateCache = useCallback(
     (account) => {
+      if (!connection || !wallet?.publicKey) {
+        return;
+      }
+
       const wrapped = wrapNativeAccount(wallet.publicKey, account);
-      if (wrapped !== undefined && wallet) {
-        const id = wallet.publicKey?.toBase58();
+      if (wrapped !== undefined) {
+        const id = wallet.publicKey.toBase58();
         cache.registerParser(id, TokenAccountParser);
         genericCache.set(id, wrapped as TokenAccount);
         cache.emitter.raiseCacheUpdated(id, false, TokenAccountParser);
       }
     },
-    [wallet]
+    [wallet, wallet?.publicKey, connection]
   );
 
   useEffect(() => {
@@ -360,7 +364,7 @@ const UseNativeAccount = () => {
         setNativeAccount(acc);
       }
     });
-  }, [setNativeAccount, wallet, wallet.publicKey, connection, updateCache]);
+  }, [setNativeAccount, wallet, wallet?.publicKey, connection, updateCache]);
 
   return { nativeAccount };
 };
@@ -394,14 +398,20 @@ export function AccountsProvider({ children = null as any }) {
   const { nativeAccount } = UseNativeAccount();
 
   const selectUserAccounts = useCallback(() => {
+    if (!wallet?.publicKey) {
+      return [];
+    }
+
+    const publicKey = wallet.publicKey.toBase58();
+
     return cache
       .byParser(TokenAccountParser)
       .map((id) => cache.get(id))
       .filter(
-        (a) => a && a.info.owner.toBase58() === wallet.publicKey?.toBase58()
+        (a) => a && a.info.owner.toBase58() === publicKey
       )
       .map((a) => a as TokenAccount);
-  }, [wallet]);
+  }, [wallet, wallet?.publicKey]);
 
   useEffect(() => {
     const accounts = selectUserAccounts().filter(

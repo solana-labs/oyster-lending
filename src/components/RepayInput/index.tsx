@@ -74,7 +74,8 @@ export const RepayInput = (props: {
       !collateralReserve ||
       !obligation ||
       !repayReserve ||
-      !obligationAccount
+      !obligationAccount ||
+      !wallet?.publicKey
     ) {
       return;
     }
