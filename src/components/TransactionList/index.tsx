@@ -99,6 +99,9 @@ export const TransactionList = () => {
           setConfirmedTxs(txs);
         }
         for (const sig of filteredSignatureList) {
+          if (txs.length >= 100) { // limited to 100 Lending transactions
+            break;
+          }
           const confirmedTx = await connection.getConfirmedTransaction(
             sig.signature
           );
