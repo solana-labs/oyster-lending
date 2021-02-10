@@ -21,6 +21,7 @@ import {
   LiquidateView,
   LiquidateReserveView,
   MarginTrading,
+  TransactionListView,
 } from "./views";
 import { NewPosition } from "./views/margin/newPosition";
 
@@ -40,6 +41,11 @@ export function Routes() {
                         exact
                         path="/dashboard"
                         children={<DashboardView />}
+                      />
+                      <Route
+                        exact
+                        path="/transactions"
+                        children={<TransactionListView />}
                       />
                       <Route path="/reserve/:id" children={<ReserveView />} />
                       <Route
@@ -79,7 +85,6 @@ export function Routes() {
                         path="/margin"
                         children={<MarginTrading />}
                       />
-
                       <Route path="/margin/:id" children={<NewPosition />} />
                       <Route exact path="/faucet" children={<FaucetView />} />
                     </Switch>

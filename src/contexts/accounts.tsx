@@ -7,7 +7,13 @@ import React, {
 } from "react";
 import { useConnection } from "./connection";
 import { useWallet } from "./wallet";
-import { AccountInfo, Connection, PublicKey } from "@solana/web3.js";
+import {
+  AccountInfo,
+  ConfirmedSignatureInfo,
+  ConfirmedTransaction,
+  Connection,
+  PublicKey,
+} from "@solana/web3.js";
 import { AccountLayout, u64, MintInfo, MintLayout } from "@solana/spl-token";
 import { PoolInfo, TokenAccount } from "./../models";
 import { chunks } from "./../utils/utils";
@@ -25,6 +31,13 @@ const pendingCalls = new Map<string, Promise<ParsedAccountBase>>();
 const genericCache = new Map<string, ParsedAccountBase>();
 const pendingMintCalls = new Map<string, Promise<MintInfo>>();
 const mintCache = new Map<string, MintInfo>();
+const transactionCache = new Map<string, ParsedLocalTransaction | null>();
+
+export interface ParsedLocalTransaction {
+  transactionType: number;
+  signature: ConfirmedSignatureInfo;
+  confirmedTx: ConfirmedTransaction | null;
+}
 
 export interface ParsedAccountBase {
   pubkey: PublicKey;
@@ -262,9 +275,27 @@ export const cache = {
     mintCache.set(id, mint);
     return mint;
   },
+  addTransaction: (signature: string, tx: ParsedLocalTransaction | null) => {
+    transactionCache.set(signature, tx);
+    return tx;
+  },
+  addBulkTransactions: (txs: Array<ParsedLocalTransaction>) => {
+    for (const tx of txs) {
+      transactionCache.set(tx.signature.signature, tx);
+    }
+    return txs;
+  },
+  getTransaction: (signature: string) => {
+    const transaction = transactionCache.get(signature);
+    return transaction;
+  },
+  getAllTransactions: () => {
+    return transactionCache;
+  },
   clear: () => {
     genericCache.clear();
     mintCache.clear();
+    transactionCache.clear();
     cache.emitter.raiseCacheCleared();
   },
 };
