@@ -50,7 +50,7 @@ export const repayInstruction = (
   const data = Buffer.alloc(dataLayout.span);
   dataLayout.encode(
     {
-      instruction: LendingInstruction.RepayOblogationLiquidity,
+      instruction: LendingInstruction.RepayObligationLiquidity,
       liquidityAmount: new BN(liquidityAmount),
     },
     data

@@ -4,7 +4,7 @@ import { MintInfo } from "@solana/spl-token";
 import { PoolInfo, TokenAccount } from "./../models";
 import { PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
-import { WAD, ZERO } from "../constants";
+import { LAMPORTS_PER_SOL, WAD, ZERO } from "../constants";
 
 export interface KnownToken {
   tokenSymbol: string;
@@ -196,7 +196,7 @@ export const formatUSD = new Intl.NumberFormat("en-US", {
   currency: "USD",
 });
 
-const numberFormater = new Intl.NumberFormat("en-US", {
+export const numberFormatter = new Intl.NumberFormat("en-US", {
   style: "decimal",
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
@@ -208,9 +208,15 @@ export const formatNumber = {
       return "--";
     }
 
-    return numberFormater.format(val);
+    return numberFormatter.format(val);
   },
 };
+
+export const feeFormatter = new Intl.NumberFormat("en-US", {
+  style: "decimal",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 9,
+});
 
 export const formatPct = new Intl.NumberFormat("en-US", {
   style: "percent",
@@ -243,4 +249,24 @@ export function getPoolName(
 ) {
   const sorted = pool.pubkeys.holdingMints.map((a) => a.toBase58()).sort();
   return sorted.map((item) => getTokenName(map, item, shorten)).join("/");
+}
+
+export function lamportsToSol(lamports: number | BN): number {
+  if (typeof lamports === "number") {
+    return Math.abs(lamports) / LAMPORTS_PER_SOL;
+  }
+
+  let signMultiplier = 1;
+  if (lamports.isNeg()) {
+    signMultiplier = -1;
+  }
+
+  const absLamports = lamports.abs();
+  const lamportsString = absLamports.toString(10).padStart(10, "0");
+  const splitIndex = lamportsString.length - 9;
+  const solString =
+    lamportsString.slice(0, splitIndex) +
+    "." +
+    lamportsString.slice(splitIndex);
+  return signMultiplier * parseFloat(solString);
 }

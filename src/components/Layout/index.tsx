@@ -10,6 +10,7 @@ import {
   HomeOutlined,
   RocketOutlined,
   ForkOutlined,
+  UnorderedListOutlined,
   // LineChartOutlined
 } from "@ant-design/icons";
 
@@ -31,6 +32,7 @@ export const AppLayout = React.memo((props: any) => {
     "/liquidate": "5",
     "/margin": "6",
     "/faucet": "7",
+    "/transactions": "8",
   };
 
   const current =
@@ -134,6 +136,15 @@ export const AppLayout = React.memo((props: any) => {
                     </Link>
                   </Menu.Item>
                 )}
+                <Menu.Item key="8" icon={<UnorderedListOutlined />}>
+                  <Link
+                    to={{
+                      pathname: "/transactions",
+                    }}
+                  >
+                    {LABELS.MENU_TRANSACTION}
+                  </Link>
+                </Menu.Item>
               </Menu>
               <Menu
                 theme={theme}
