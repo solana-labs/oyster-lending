@@ -13,11 +13,11 @@ export const TransactionListView = () => {
   const connection = useConnection();
 
   const [confirmedTxs, setConfirmedTxs] = useState<any[]>([]);
-  const [loading, setloading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     const queryTxs = async () => {
-      if (connected) {
-        setloading(true);
+      if (connected && wallet?.publicKey) {
+        setLoading(true);
         const signatureList = await connection.getConfirmedSignaturesForAddress2(
           wallet.publicKey
         );
@@ -71,10 +71,10 @@ export const TransactionListView = () => {
       return [];
     };
     Promise.all([queryTxs()]).then((all) => {
-      setloading(false);
+      setLoading(false);
       setConfirmedTxs(all.flat());
     });
-  }, [connected, connection, wallet.publicKey]);
+  }, [connected, connection, wallet?.publicKey, setLoading]);
 
   return connected ? (
     <div className="flexColumn">
