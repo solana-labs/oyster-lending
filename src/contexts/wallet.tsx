@@ -64,6 +64,7 @@ const WalletContext = React.createContext<{
 export function WalletProvider({ children = null as any }) {
   const { endpoint } = useConnectionConfig();
 
+  const [autoConnect, setAutoConnect] = useState(false);
   const [providerUrl, setProviderUrl] = useLocalStorageState("walletProvider");
 
   const provider = useMemo(() => WALLET_PROVIDERS.find(({ url }) => url === providerUrl), [providerUrl]);
@@ -104,13 +105,24 @@ export function WalletProvider({ children = null as any }) {
           description: "Disconnected from wallet",
         });
       });
-
-      return () => {
-        setConnected(false);
-        wallet.disconnect();
-      };
     }
+
+    return () => {
+      setConnected(false);
+      if(wallet)  {
+        wallet.disconnect();
+      }
+    };
   }, [wallet]);
+
+  useEffect(() => {
+    if(wallet && autoConnect) {
+      wallet.connect();
+      setAutoConnect(false);
+    }
+
+    return () => {}
+  }, [wallet, autoConnect]);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -134,10 +146,11 @@ export function WalletProvider({ children = null as any }) {
         okButtonProps={{ style: { display: "none" } }}
         onCancel={close}
         width={ 400 }>
-        { WALLET_PROVIDERS.map((provider) => {
+        {WALLET_PROVIDERS.map((provider) => {
           const onClick = function () {
             setProviderUrl(provider.url);
-            close();
+            setAutoConnect(true);
+            close();   
           }
 
           return (
@@ -147,6 +160,7 @@ export function WalletProvider({ children = null as any }) {
                   onClick={onClick}
                   icon={
                     <img
+                        alt={`${provider.name}`}
                         width={ 20 }
                         height={ 20 }
                         src={ provider.icon }

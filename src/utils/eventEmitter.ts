@@ -30,7 +30,6 @@ export class MarketUpdateEvent {
 
 export class CacheClearEvent {
   static type = "CacheUpdate";
-  constructor() {}
 }
 
 export class EventEmitter {

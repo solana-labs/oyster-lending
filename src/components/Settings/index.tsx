@@ -4,7 +4,7 @@ import { ENDPOINTS, useConnectionConfig } from "../../contexts/connection";
 import { useWallet } from "../../contexts/wallet";
 
 export const Settings = () => {
-  const { select } = useWallet();
+  const { connected, disconnect } = useWallet();
   const { endpoint, setEndpoint } = useConnectionConfig();
 
   return (
@@ -22,7 +22,7 @@ export const Settings = () => {
             </Select.Option>
           ))}
         </Select>
-        <Button type="primary" onClick={select}>Select Wallet</Button>
+        {connected && <Button type="primary" onClick={disconnect}>Disconnect</Button>}
       </div>
     </>
   );
