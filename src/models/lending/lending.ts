@@ -11,9 +11,9 @@ export enum LendingInstruction {
 }
 
 export const TransactionListLookup: { [key: number]: string } = {
-  3: "DepositReserveLiquidity",
-  4: "WithdrawReserveLiquidity",
-  5: "BorrowLiquidity",
-  6: "RepayObligationLiquidity",
-  7: "LiquidateObligation",
+  3: "Deposit",
+  4: "Withdraw",
+  5: "Borrow",
+  6: "Repay",
+  7: "Liquidate",
 };

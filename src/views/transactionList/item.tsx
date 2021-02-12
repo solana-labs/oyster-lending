@@ -1,11 +1,8 @@
-import { ExplorerLink } from "../../../components/ExplorerLink";
+import { ExplorerLink } from "../../components/ExplorerLink";
 import { Button, Popover, Tag } from "antd";
-import {
-  feeFormatter,
-  lamportsToSol,
-  shortenAddress,
-} from "../../../utils/utils";
+import { feeFormatter, lamportsToSol, shortenAddress } from "../../utils/utils";
 import React from "react";
+import { TransactionListLookup } from "../../models";
 
 export const SingleTypeTransactionItem = (props: { transaction: any }) => {
   const tx = props.transaction;
@@ -15,6 +12,9 @@ export const SingleTypeTransactionItem = (props: { transaction: any }) => {
   return (
     <div className="dashboard-item">
       <div style={{ textAlign: "left" }}>
+        {TransactionListLookup[tx.transactionType]}
+      </div>
+      <div>
         <ExplorerLink address={tx.signature.signature} type="transaction" />
       </div>
       <div>
@@ -24,7 +24,7 @@ export const SingleTypeTransactionItem = (props: { transaction: any }) => {
           content={
             <ul>
               {tx.confirmedTx.meta.logMessages.map((msg: string) => (
-                <li>{msg}</li>
+                <li key={msg}>{msg}</li>
               ))}
             </ul>
           }
