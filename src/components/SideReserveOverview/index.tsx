@@ -120,14 +120,12 @@ export const SideReserveOverview = (props: {
         </div>
       </div>
 
-        <div className="card-row">
-          <Text type="secondary" className="card-cell ">
-            Liquidation penalty:
-          </Text>
-          <div className="card-cell ">
-            {formatPct.format(liquidationPenalty)}
-          </div>
-        </div>
+      <div className="card-row">
+        <Text type="secondary" className="card-cell ">
+          Liquidation penalty:
+        </Text>
+        <div className="card-cell ">{formatPct.format(liquidationPenalty)}</div>
+      </div>
     </Card>
   );
 };
