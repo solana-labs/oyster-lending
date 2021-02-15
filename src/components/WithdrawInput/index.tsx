@@ -98,7 +98,7 @@ export const WithdrawInput = (props: {
     type,
     value,
     wallet,
-    wallet?.publicKey
+    wallet?.publicKey,
   ]);
 
   const bodyStyle: React.CSSProperties = {

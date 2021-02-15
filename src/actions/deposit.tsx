@@ -31,7 +31,7 @@ export const deposit = async (
   wallet: WalletAdapter
 ) => {
   if (!wallet.publicKey) {
-    throw new Error('Wallet is not connected');
+    throw new Error("Wallet is not connected");
   }
 
   notify({

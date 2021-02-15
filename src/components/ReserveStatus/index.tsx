@@ -6,7 +6,13 @@ import "./style.less";
 import { GUTTER, LABELS } from "../../constants";
 import { ReserveUtilizationChart } from "./../../components/ReserveUtilizationChart";
 import { useMemo } from "react";
-import { formatNumber, fromLamports, wadToLamports } from "../../utils/utils";
+import {
+  feeFormatter,
+  formatNumber,
+  fromLamports,
+  isSmallNumber,
+  wadToLamports,
+} from "../../utils/utils";
 import { useMint } from "../../contexts/accounts";
 import { useMidPriceInUSD } from "../../contexts/market";
 import { TokenIcon } from "../TokenIcon";
@@ -148,8 +154,9 @@ export const ReserveStatus = (props: {
             <Statistic
               title={LABELS.TABLE_TITLE_DEPOSIT_APY}
               className="small-statisitc"
-              value={depositAPY * 100}
-              precision={2}
+              value={formatNumber.format(depositAPY * 100, true)}
+              precision={3}
+              prefix={isSmallNumber(depositAPY * 100) ? "<" : ""}
               suffix="%"
             />
           </Col>

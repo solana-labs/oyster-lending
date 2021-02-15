@@ -202,10 +202,17 @@ export const numberFormatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 2,
 });
 
+export const isSmallNumber = (val: number) => {
+  return val < 0.001 && val > 0;
+};
+
 export const formatNumber = {
-  format: (val?: number) => {
+  format: (val?: number, useSmall?: boolean) => {
     if (!val) {
       return "--";
+    }
+    if (useSmall && isSmallNumber(val)) {
+      return 0.001;
     }
 
     return numberFormatter.format(val);

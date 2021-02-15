@@ -13,7 +13,7 @@ export const FaucetView = () => {
 
   const airdrop = useCallback(() => {
     if (!wallet?.publicKey) {
-        return;
+      return;
     }
 
     connection

@@ -438,9 +438,7 @@ export function AccountsProvider({ children = null as any }) {
     return cache
       .byParser(TokenAccountParser)
       .map((id) => cache.get(id))
-      .filter(
-        (a) => a && a.info.owner.toBase58() === publicKey
-      )
+      .filter((a) => a && a.info.owner.toBase58() === publicKey)
       .map((a) => a as TokenAccount);
   }, [wallet, wallet?.publicKey]);
 

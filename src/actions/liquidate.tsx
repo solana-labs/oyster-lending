@@ -41,7 +41,7 @@ export const liquidate = async (
   withdrawReserve: ParsedAccount<LendingReserve>
 ) => {
   if (!wallet.publicKey) {
-    throw new Error('Wallet is not connected');
+    throw new Error("Wallet is not connected");
   }
 
   notify({

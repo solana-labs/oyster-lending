@@ -19,7 +19,12 @@ const LEDGER_CLA = 0xe0;
 /*
  * Helper for chunked send of large payloads
  */
-async function ledgerSend(transport: Transport, instruction: number, p1: number, payload: Buffer) {
+async function ledgerSend(
+  transport: Transport,
+  instruction: number,
+  p1: number,
+  payload: Buffer
+) {
   let p2 = 0;
   let payloadOffset = 0;
 
@@ -27,8 +32,19 @@ async function ledgerSend(transport: Transport, instruction: number, p1: number,
     while (payload.length - payloadOffset > MAX_PAYLOAD) {
       const chunk = payload.slice(payloadOffset, payloadOffset + MAX_PAYLOAD);
       payloadOffset += MAX_PAYLOAD;
-      console.log("send", (p2 | P2_MORE).toString(16), chunk.length.toString(16), chunk);
-      const reply = await transport.send(LEDGER_CLA, instruction, p1, p2 | P2_MORE, chunk);
+      console.log(
+        "send",
+        (p2 | P2_MORE).toString(16),
+        chunk.length.toString(16),
+        chunk
+      );
+      const reply = await transport.send(
+        LEDGER_CLA,
+        instruction,
+        p1,
+        p2 | P2_MORE,
+        chunk
+      );
       if (reply.length !== 2) {
         throw new Error("Received unexpected reply payload");
       }
@@ -60,7 +76,7 @@ export function getSolanaDerivationPath(account?: number, change?: number) {
     length = 2;
   }
 
-  var derivationPath = Buffer.alloc(1 + (length * 4));
+  var derivationPath = Buffer.alloc(1 + length * 4);
   // eslint-disable-next-line
   var offset = 0;
   offset = derivationPath.writeUInt8(length, offset);
@@ -78,12 +94,20 @@ export function getSolanaDerivationPath(account?: number, change?: number) {
   return derivationPath;
 }
 
-export async function signTransaction(transport: Transport, transaction: Transaction, derivationPath: Buffer = getSolanaDerivationPath()) {
+export async function signTransaction(
+  transport: Transport,
+  transaction: Transaction,
+  derivationPath: Buffer = getSolanaDerivationPath()
+) {
   const messageBytes = transaction.serializeMessage();
   return signBytes(transport, messageBytes, derivationPath);
 }
 
-export async function signBytes(transport: Transport, bytes: Buffer, derivationPath: Buffer = getSolanaDerivationPath()) {
+export async function signBytes(
+  transport: Transport,
+  bytes: Buffer,
+  derivationPath: Buffer = getSolanaDerivationPath()
+) {
   const numPaths = Buffer.alloc(1);
   numPaths.writeUInt8(1, 0);
 
@@ -94,8 +118,16 @@ export async function signBytes(transport: Transport, bytes: Buffer, derivationP
   return ledgerSend(transport, INS_SIGN_MESSAGE, P1_CONFIRM, payload);
 }
 
-export async function getPublicKey(transport: Transport, derivationPath: Buffer = getSolanaDerivationPath()) {
-  const publicKeyBytes = await ledgerSend(transport, INS_GET_PUBKEY, P1_NON_CONFIRM, derivationPath);
+export async function getPublicKey(
+  transport: Transport,
+  derivationPath: Buffer = getSolanaDerivationPath()
+) {
+  const publicKeyBytes = await ledgerSend(
+    transport,
+    INS_GET_PUBKEY,
+    P1_NON_CONFIRM,
+    derivationPath
+  );
 
   return new PublicKey(publicKeyBytes);
 }
