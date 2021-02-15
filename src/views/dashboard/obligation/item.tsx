@@ -90,7 +90,7 @@ export const ObligationItem = (props: {
         {formatPct.format(obligation.info.ltv / 100)}
       </div>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Link to={`/borrow/${borrowReserve.pubkey.toBase58()}`}>
+        <Link to={`/borrow/${borrowName}`}>
           <Button type="primary">
             <span>Borrow</span>
           </Button>

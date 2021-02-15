@@ -29,7 +29,7 @@ export const ReserveItem = (props: {
   const apy = calculateDepositAPY(props.reserve);
 
   return (
-    <Link to={`/deposit/${props.address.toBase58()}`}>
+    <Link to={`/deposit/${name}`}>
       <div className="deposit-item">
         <span style={{ display: "flex" }}>
           <TokenIcon mintAddress={props.reserve.liquidityMint} />

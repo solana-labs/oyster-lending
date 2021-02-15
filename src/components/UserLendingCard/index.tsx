@@ -149,13 +149,13 @@ export const UserLendingCard = (props: {
         className="card-row"
         style={{ marginTop: 20, justifyContent: "space-evenly" }}
       >
-        <Link to={`/deposit/${address}`}>
+        <Link to={`/deposit/${name}`}>
           <Button>{LABELS.DEPOSIT_ACTION}</Button>
         </Link>
-        <Link to={`/borrow/${address}`}>
+        <Link to={`/borrow/${name}`}>
           <Button>{LABELS.BORROW_ACTION}</Button>
         </Link>
-        <Link to={`/withdraw/${address}`}>
+        <Link to={`/withdraw/${name}`}>
           <Button>{LABELS.WITHDRAW_ACTION}</Button>
         </Link>
         {!!userObligationsByReserve.length && (

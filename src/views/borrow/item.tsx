@@ -21,7 +21,7 @@ export const BorrowItem = (props: {
   const apr = calculateBorrowAPY(props.reserve);
 
   return (
-    <Link to={`/borrow/${props.address.toBase58()}`}>
+    <Link to={`/borrow/${name}`}>
       <div className="borrow-item">
         <span style={{ display: "flex" }}>
           <TokenIcon mintAddress={props.reserve.liquidityMint} />

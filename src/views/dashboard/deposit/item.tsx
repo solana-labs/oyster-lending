@@ -34,12 +34,12 @@ export const DepositItem = (props: { userDeposit: UserDeposit }) => {
       </div>
       <div>{formatPct.format(depositAPY)}</div>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Link to={`/deposit/${reserve.pubkey.toBase58()}`}>
+        <Link to={`/deposit/${name}`}>
           <Button type="primary">
             <span>{LABELS.DEPOSIT_ACTION}</span>
           </Button>
         </Link>
-        <Link to={`/withdraw/${reserve.pubkey.toBase58()}`}>
+        <Link to={`/withdraw/${name}`}>
           <Button type="text">
             <span>{LABELS.WITHDRAW_ACTION}</span>
           </Button>
