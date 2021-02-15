@@ -46,39 +46,12 @@ export const SideReserveOverview = (props: {
   let extraInfo: JSX.Element | null = null;
   if (mode === SideReserveOverviewMode.Deposit) {
     extraInfo = (
-      <>
-        <div className="card-row">
-          <Text type="secondary" className="card-cell ">
-            {LABELS.TABLE_TITLE_DEPOSIT_APY}:
-          </Text>
-          <div className="card-cell ">{formatPct.format(depositApy)}</div>
-        </div>
-
-        <div className="card-row">
-          <Text type="secondary" className="card-cell ">
-            Maximum LTV:
-          </Text>
-          <div className="card-cell ">{formatPct.format(maxLTV)}</div>
-        </div>
-
-        <div className="card-row">
-          <Text type="secondary" className="card-cell ">
-            Liquidation threshold:
-          </Text>
-          <div className="card-cell ">
-            {formatPct.format(liquidationThreshold)}
-          </div>
-        </div>
-
-        <div className="card-row">
-          <Text type="secondary" className="card-cell ">
-            Liquidation penalty:
-          </Text>
-          <div className="card-cell ">
-            {formatPct.format(liquidationPenalty)}
-          </div>
-        </div>
-      </>
+      <div className="card-row">
+        <Text type="secondary" className="card-cell ">
+          {LABELS.TABLE_TITLE_DEPOSIT_APY}:
+        </Text>
+        <div className="card-cell ">{formatPct.format(depositApy)}</div>
+      </div>
     );
   } else if (mode === SideReserveOverviewMode.Borrow) {
     extraInfo = (
@@ -130,8 +103,31 @@ export const SideReserveOverview = (props: {
           {formatNumber.format(availableLiquidity)} {name}
         </div>
       </div>
-
       {extraInfo}
+      <div className="card-row">
+        <Text type="secondary" className="card-cell ">
+          Maximum LTV:
+        </Text>
+        <div className="card-cell ">{formatPct.format(maxLTV)}</div>
+      </div>
+
+      <div className="card-row">
+        <Text type="secondary" className="card-cell ">
+          Liquidation threshold:
+        </Text>
+        <div className="card-cell ">
+          {formatPct.format(liquidationThreshold)}
+        </div>
+      </div>
+
+        <div className="card-row">
+          <Text type="secondary" className="card-cell ">
+            Liquidation penalty:
+          </Text>
+          <div className="card-cell ">
+            {formatPct.format(liquidationPenalty)}
+          </div>
+        </div>
     </Card>
   );
 };
