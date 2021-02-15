@@ -3,10 +3,11 @@ import { useWallet } from "../../contexts/wallet";
 import { useConnection } from "../../contexts/connection";
 import { cache, ParsedLocalTransaction } from "../../contexts/accounts";
 import { LENDING_PROGRAM_ID } from "../../utils/ids";
-import { LendingInstruction, TransactionListLookup } from "../../models";
-import { Col, Row } from "antd";
+import { TransactionListLookup } from "../../models";
+import { Card } from "antd";
 import { LABELS } from "../../constants";
-import { SingleTypeTransactionList } from "./transaction";
+import { LoadingOutlined } from "@ant-design/icons";
+import { SingleTypeTransactionItem } from "./item";
 
 export const TransactionListView = () => {
   const { connected, wallet } = useWallet();
@@ -77,69 +78,34 @@ export const TransactionListView = () => {
   }, [connected, connection, wallet?.publicKey, setLoading]);
 
   return connected ? (
-    <div className="flexColumn">
-      <Row>
-        <Col md={24} xl={24} span={24}>
-          <SingleTypeTransactionList
-            list={confirmedTxs.filter(
-              (tx) =>
-                tx.transactionType ===
-                LendingInstruction.DepositReserveLiquidity
+    <div className={"flexColumn"}>
+      <Card
+        style={{ marginBottom: "10px" }}
+        title={
+          <div>
+            Transactions{" "}
+            {loading && (
+              <span>
+                (Loading <LoadingOutlined />)
+              </span>
             )}
-            title={LABELS.TABLE_TITLE_DEPOSITS}
-            loading={loading}
+          </div>
+        }
+      >
+        <div className="dashboard-item dashboard-header">
+          <div>Type</div>
+          <div>Explorer Link</div>
+          <div>Log Details</div>
+          <div>Fee (SOL)</div>
+          <div>Status</div>
+        </div>
+        {confirmedTxs.map((tx) => (
+          <SingleTypeTransactionItem
+            key={tx.signature.signature}
+            transaction={tx}
           />
-        </Col>
-      </Row>
-      <Row>
-        <Col md={24} xl={24} span={24}>
-          <SingleTypeTransactionList
-            list={confirmedTxs.filter(
-              (tx) =>
-                tx.transactionType ===
-                LendingInstruction.WithdrawReserveLiquidity
-            )}
-            title={LABELS.TABLE_TITLE_WITHDRAWS}
-            loading={loading}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col md={24} xl={24} span={24}>
-          <SingleTypeTransactionList
-            list={confirmedTxs.filter(
-              (tx) => tx.transactionType === LendingInstruction.BorrowLiquidity
-            )}
-            title={LABELS.TABLE_TITLE_BORROWS}
-            loading={loading}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col md={24} xl={24} span={24}>
-          <SingleTypeTransactionList
-            list={confirmedTxs.filter(
-              (tx) =>
-                tx.transactionType ===
-                LendingInstruction.RepayObligationLiquidity
-            )}
-            title={LABELS.TABLE_TITLE_REPAY_OBLIGATIONS}
-            loading={loading}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col md={24} xl={24} span={24}>
-          <SingleTypeTransactionList
-            list={confirmedTxs.filter(
-              (tx) =>
-                tx.transactionType === LendingInstruction.LiquidateObligation
-            )}
-            title={LABELS.TABLE_TITLE_LIQUIDATE_OBLIGATIONS}
-            loading={loading}
-          />
-        </Col>
-      </Row>
+        ))}
+      </Card>
     </div>
   ) : (
     <div className="dashboard-info">
