@@ -10,13 +10,13 @@ export const marks = {
 export const riskMarks = {
   0: {
     style: {
-      color: "darkgreen",
+      color: "rgb(63, 187, 0)",
     },
     label: LABELS.SAFER,
   },
   100: {
     style: {
-      color: "darkred",
+      color: "red",
     },
     label: LABELS.RISKIER,
   },

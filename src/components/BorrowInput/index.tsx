@@ -68,6 +68,7 @@ export const BorrowInput = (props: {
   const convert = useCallback(
     (val: string | number) => {
       const minAmount = Math.min(tokenBalance, Infinity);
+      setLastTyped("borrow");
       if (typeof val === "string") {
         return (parseFloat(val) / minAmount) * 100;
       } else {
@@ -77,7 +78,7 @@ export const BorrowInput = (props: {
     [tokenBalance]
   );
 
-  const { value, setValue, pct } = useSliderInput(convert);
+  const { value, setValue, pct, setPct } = useSliderInput(convert);
 
   useEffect(() => {
     if (collateralReserve && lastTyped === "collateral") {
@@ -231,7 +232,7 @@ export const BorrowInput = (props: {
               useFirstReserve={true}
             />
           </div>
-          <RiskSlider value={pct} />
+          <RiskSlider value={pct} onChange={(val) => setPct(val)} />
           <div
             style={{
               display: "flex",
