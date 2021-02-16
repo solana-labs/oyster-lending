@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Select } from 'antd';
+import { Button, Select } from "antd";
 import { ENDPOINTS, useConnectionConfig } from "../../contexts/connection";
 import { useWallet } from "../../contexts/wallet";
 
@@ -22,7 +22,11 @@ export const Settings = () => {
             </Select.Option>
           ))}
         </Select>
-        {connected && <Button type="primary" onClick={disconnect}>Disconnect</Button>}
+        {connected && (
+          <Button type="primary" onClick={disconnect}>
+            Disconnect
+          </Button>
+        )}
       </div>
     </>
   );

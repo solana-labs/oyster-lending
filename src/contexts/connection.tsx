@@ -226,7 +226,7 @@ export const sendTransaction = async (
   awaitConfirmation = true
 ) => {
   if (!wallet?.publicKey) {
-    throw new Error('Wallet is not connected');
+    throw new Error("Wallet is not connected");
   }
 
   let transaction = new Transaction();

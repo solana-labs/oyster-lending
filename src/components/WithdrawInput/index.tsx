@@ -16,6 +16,7 @@ import { LABELS, marks } from "../../constants";
 import { ActionConfirmation } from "./../ActionConfirmation";
 import { ConnectButton } from "../ConnectButton";
 import CollateralInput from "../CollateralInput";
+import { notify } from "../../utils/notifications";
 
 export const WithdrawInput = (props: {
   className?: string;
@@ -80,8 +81,13 @@ export const WithdrawInput = (props: {
 
         setValue("");
         setShowConfirmation(true);
-      } catch {
+      } catch (error) {
         // TODO:
+        notify({
+          message: "Unable to withdraw.",
+          type: "error",
+          description: error.message,
+        });
       } finally {
         setPendingTx(false);
       }
@@ -98,7 +104,7 @@ export const WithdrawInput = (props: {
     type,
     value,
     wallet,
-    wallet?.publicKey
+    wallet?.publicKey,
   ]);
 
   const bodyStyle: React.CSSProperties = {

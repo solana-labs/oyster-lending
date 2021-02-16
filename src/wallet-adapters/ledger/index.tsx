@@ -6,7 +6,7 @@ import { PublicKey } from "@solana/web3.js";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import { WalletAdapter } from "../../contexts/wallet";
 import { notify } from "../../utils/notifications";
-import { getPublicKey, signTransaction } from './core';
+import { getPublicKey, signTransaction } from "./core";
 
 export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
   _connecting: boolean;
@@ -16,7 +16,7 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
   constructor() {
     super();
     this._connecting = false;
-    this._publicKey  = null;
+    this._publicKey = null;
     this._transport = null;
   }
 
@@ -26,7 +26,7 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
 
   async signTransaction(transaction: Transaction) {
     if (!this._transport || !this._publicKey) {
-      throw new Error("Not connected to Ledger")
+      throw new Error("Not connected to Ledger");
     }
 
     // @TODO: account selection (derivation path changes with account)
@@ -50,15 +50,13 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
       // @TODO: account selection
       this._publicKey = await getPublicKey(this._transport);
       this.emit("connect", this._publicKey);
-    }
-    catch (error) {
+    } catch (error) {
       notify({
         message: "Ledger Error",
         description: error.message,
       });
       await this.disconnect();
-    }
-    finally {
+    } finally {
       this._connecting = false;
     }
   }
@@ -71,8 +69,8 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
       emit = true;
     }
 
-    this._connecting = false
-    this._publicKey  = null;
+    this._connecting = false;
+    this._publicKey = null;
 
     if (emit) {
       this.emit("disconnect");

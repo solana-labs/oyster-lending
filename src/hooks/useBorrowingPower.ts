@@ -5,6 +5,8 @@ import { useLendingMarket } from "./useLendingMarket";
 import { getLendingReserves, useLendingReserve } from "./useLendingReserves";
 import { useUserDeposits } from "./useUserDeposits";
 import { useUserObligations } from "./useUserObligations";
+import { fromLamports } from "../utils/utils";
+import { useMint } from "../contexts/accounts";
 
 // TODO: add option to decrease buying power by overcollateralization factor
 // TODO: add support for balance in the wallet
@@ -20,12 +22,17 @@ export function useBorrowingPower(
         : reserveAddress?.toBase58() || "",
     [reserveAddress]
   );
-
   const reserve = useLendingReserve(key);
+  const liquidityMintInfo = useMint(reserve?.info.liquidityMint);
 
   const liquidityMint = reserve?.info.liquidityMint;
   const liquidityMintAddress = liquidityMint?.toBase58();
   const market = useLendingMarket(reserve?.info.lendingMarket);
+
+  const availableLiquidity = fromLamports(
+    reserve?.info.state.availableLiquidity,
+    liquidityMintInfo
+  );
 
   const quoteMintAddess = market?.info?.quoteMint?.toBase58();
 
@@ -45,6 +52,7 @@ export function useBorrowingPower(
   const { totalInQuote } = useUserDeposits(exclude, inlcude);
 
   const price = useMidPriceInUSD(liquidityMintAddress).price;
+  const availableLiquidityInUSD = availableLiquidity * price;
 
   const { totalInQuote: loansValue } = useUserObligations();
 
@@ -55,7 +63,7 @@ export function useBorrowingPower(
   // amounts already expressed as quite mint
   if (liquidityMintAddress === quoteMintAddess) {
     return {
-      borrowingPower: totalInQuote,
+      borrowingPower: Math.min(totalInQuote, availableLiquidityInUSD),
       totalInQuote,
       utilization,
     };

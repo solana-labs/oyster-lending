@@ -1,6 +1,11 @@
 import React, { useMemo } from "react";
 import { LendingReserve } from "../../models/lending";
-import { fromLamports, wadToLamports } from "../../utils/utils";
+import {
+  formatNumber,
+  fromLamports,
+  isSmallNumber,
+  wadToLamports,
+} from "../../utils/utils";
 import { useMint } from "../../contexts/accounts";
 import { WaterWave } from "./../WaterWave";
 import { Statistic } from "antd";
@@ -32,9 +37,10 @@ export const ReserveUtilizationChart = (props: { reserve: LendingReserve }) => {
       title={
         <Statistic
           title="Utilization"
-          value={percent}
           suffix="%"
-          precision={2}
+          value={formatNumber.format(percent, true)}
+          precision={3}
+          prefix={isSmallNumber(percent) ? "<" : ""}
         />
       }
       percent={percent}

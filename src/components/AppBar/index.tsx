@@ -5,7 +5,7 @@ import { CurrentUserBadge } from "../CurrentUserBadge";
 import { SettingOutlined } from "@ant-design/icons";
 import { Settings } from "../Settings";
 import { LABELS } from "../../constants";
-import {ConnectButton} from "../ConnectButton";
+import { ConnectButton } from "../ConnectButton";
 
 export const AppBar = (props: { left?: JSX.Element; right?: JSX.Element }) => {
   const { connected } = useWallet();
@@ -13,13 +13,14 @@ export const AppBar = (props: { left?: JSX.Element; right?: JSX.Element }) => {
   const TopBar = (
     <div className="App-Bar-right">
       {connected ? (
-          <CurrentUserBadge />
+        <CurrentUserBadge />
       ) : (
-          <ConnectButton
-            type="text"
-            size="large"
-            allowWalletChange={true}
-            style={{ color: "#2abdd2" }}/>
+        <ConnectButton
+          type="text"
+          size="large"
+          allowWalletChange={true}
+          style={{ color: "#2abdd2" }}
+        />
       )}
       <Popover
         placement="topRight"

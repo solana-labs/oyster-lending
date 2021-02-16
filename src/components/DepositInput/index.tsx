@@ -11,6 +11,7 @@ import { ActionConfirmation } from "./../ActionConfirmation";
 import { LABELS, marks } from "../../constants";
 import { ConnectButton } from "../ConnectButton";
 import CollateralInput from "../CollateralInput";
+import { notify } from "../../utils/notifications";
 
 export const DepositInput = (props: {
   className?: string;
@@ -64,8 +65,14 @@ export const DepositInput = (props: {
 
         setValue("");
         setShowConfirmation(true);
-      } catch {
+      } catch (error) {
         // TODO:
+        console.log(error);
+        notify({
+          message: "Error in deposit.",
+          type: "error",
+          description: error.message,
+        });
       } finally {
         setPendingTx(false);
       }

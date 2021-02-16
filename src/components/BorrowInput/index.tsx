@@ -23,6 +23,7 @@ import { ConnectButton } from "../ConnectButton";
 import CollateralInput from "../CollateralInput";
 import { useMidPriceInUSD } from "../../contexts/market";
 import { RiskSlider } from "../RiskSlider";
+import { notify } from "../../utils/notifications";
 
 export const BorrowInput = (props: {
   className?: string;
@@ -67,6 +68,7 @@ export const BorrowInput = (props: {
   const convert = useCallback(
     (val: string | number) => {
       const minAmount = Math.min(tokenBalance, Infinity);
+      setLastTyped("borrow");
       if (typeof val === "string") {
         return (parseFloat(val) / minAmount) * 100;
       } else {
@@ -76,7 +78,7 @@ export const BorrowInput = (props: {
     [tokenBalance]
   );
 
-  const { value, setValue, pct } = useSliderInput(convert);
+  const { value, setValue, pct, setPct } = useSliderInput(convert);
 
   useEffect(() => {
     if (collateralReserve && lastTyped === "collateral") {
@@ -163,8 +165,13 @@ export const BorrowInput = (props: {
         setValue("");
         setCollateralValue("");
         setShowConfirmation(true);
-      } catch {
+      } catch (error) {
         // TODO:
+        notify({
+          message: "Unable to borrow.",
+          type: "error",
+          description: error.message,
+        });
       } finally {
         setPendingTx(false);
       }
@@ -225,7 +232,7 @@ export const BorrowInput = (props: {
               useFirstReserve={true}
             />
           </div>
-          <RiskSlider value={pct} />
+          <RiskSlider value={pct} onChange={(val) => setPct(val)} />
           <div
             style={{
               display: "flex",
