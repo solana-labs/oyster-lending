@@ -90,7 +90,7 @@ export const BorrowReserveView = () => {
             />
           </Card>
         </Col>
-        <Col xs={24} xl={3}>
+        <Col xs={24} xl={4}>
           <Card>
             <Statistic
               title={LABELS.WALLET_BALANCE}
@@ -101,7 +101,7 @@ export const BorrowReserveView = () => {
             />
           </Card>
         </Col>
-        <Col xs={24} xl={9}>
+        <Col xs={24} xl={8}>
           <Card>
             <BarChartStatistic
               title="Your Loans"
@@ -115,14 +115,14 @@ export const BorrowReserveView = () => {
         </Col>
       </Row>
       <Row gutter={GUTTER} style={{ flex: 1 }}>
-        <Col xs={24} xl={15}>
+        <Col xs={24} xl={16}>
           <BorrowInput
             onCollateralReserve={setCollateralReserveKey}
             className="card-fill"
             reserve={lendingReserve}
           />
         </Col>
-        <Col xs={24} xl={9}>
+        <Col xs={24} xl={8}>
           <SideReserveOverview
             className="card-fill"
             reserve={lendingReserve}

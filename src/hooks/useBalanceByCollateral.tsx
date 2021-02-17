@@ -26,6 +26,6 @@ export const useBalanceByCollateral = (collateralReserve?: string) => {
     } else {
       setBalance(0);
     }
-  });
+  }, [collateralReserve, userDeposits.userDeposits]);
   return balance;
 };
