@@ -1,23 +1,37 @@
 import React from "react";
 import { useMint, useAccountByMint } from "../../contexts/accounts";
 import { TokenIcon } from "../TokenIcon";
+import { useBalanceByCollateral } from "../../hooks/useBalanceByCollateral";
 
 export const TokenDisplay = (props: {
   name: string;
   mintAddress: string;
   icon?: JSX.Element;
   showBalance?: boolean;
+  useWalletBalance?: boolean;
+  reserve?: string;
 }) => {
-  const { showBalance, mintAddress, name, icon } = props;
+  const {
+    useWalletBalance,
+    reserve,
+    showBalance,
+    mintAddress,
+    name,
+    icon,
+  } = props;
   const tokenMint = useMint(mintAddress);
   const tokenAccount = useAccountByMint(mintAddress);
+  const collateralBalance = useBalanceByCollateral(reserve);
 
   let balance: number = 0;
   let hasBalance: boolean = false;
   if (showBalance) {
-    if (tokenAccount && tokenMint) {
+    if (useWalletBalance && tokenAccount && tokenMint) {
       balance =
         tokenAccount.info.amount.toNumber() / Math.pow(10, tokenMint.decimals);
+      hasBalance = balance > 0;
+    } else if (reserve) {
+      balance = collateralBalance;
       hasBalance = balance > 0;
     }
   }

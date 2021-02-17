@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import {
   useBorrowingPower,
   useLendingReserve,
@@ -15,22 +15,51 @@ import {
 import { Card, Col, Row, Statistic } from "antd";
 import { BarChartStatistic } from "../../components/BarChartStatistic";
 import { GUTTER, LABELS } from "../../constants";
+import {
+  cache,
+  ParsedAccount,
+  useAccountByMint,
+  useMint,
+} from "../../contexts/accounts";
+import { LendingReserve, LendingReserveParser } from "../../models";
+import { getTokenName } from "../../utils/utils";
+import { useConnectionConfig } from "../../contexts/connection";
 
 export const BorrowReserveView = () => {
   const { id } = useParams<{ id: string }>();
   const lendingReserve = useLendingReserve(id);
   const { userObligations, totalInQuote: loansValue } = useUserObligations();
+  const { tokenMap } = useConnectionConfig();
 
   const { totalInQuote: borrowingPower, utilization } = useBorrowingPower(id);
+  const [collateralReserveKey, setCollateralReserveKey] = useState<string>("");
+  const collateralReserve = useMemo(() => {
+    const id: string =
+      cache
+        .byParser(LendingReserveParser)
+        .find((acc) => acc === collateralReserveKey) || "";
 
+    return cache.get(id) as ParsedAccount<LendingReserve>;
+  }, [collateralReserveKey]);
+
+  const mintAddress = collateralReserve?.info.liquidityMint.toBase58();
+
+  const tokenMint = useMint(mintAddress);
+  const tokenAccount = useAccountByMint(mintAddress);
+  const name = getTokenName(tokenMap, mintAddress);
   if (!lendingReserve) {
     return null;
+  }
+  let balance: number = 0;
+  if (tokenAccount && tokenMint) {
+    balance =
+      tokenAccount.info.amount.toNumber() / Math.pow(10, tokenMint.decimals);
   }
 
   return (
     <div className="borrow-reserve">
       <Row gutter={GUTTER}>
-        <Col xs={24} xl={5}>
+        <Col xs={24} xl={4}>
           <Card>
             <Statistic
               title={LABELS.BORROWED_VALUE}
@@ -40,7 +69,7 @@ export const BorrowReserveView = () => {
             />
           </Card>
         </Col>
-        <Col xs={24} xl={5}>
+        <Col xs={24} xl={4}>
           <Card>
             <Statistic
               title={LABELS.BORROWING_POWER_USED}
@@ -50,7 +79,7 @@ export const BorrowReserveView = () => {
             />
           </Card>
         </Col>
-        <Col xs={24} xl={5}>
+        <Col xs={24} xl={4}>
           <Card>
             <Statistic
               title={LABELS.BORROWING_POWER_VALUE}
@@ -58,6 +87,17 @@ export const BorrowReserveView = () => {
               valueStyle={{ color: "#3fBB00" }}
               precision={2}
               prefix="$"
+            />
+          </Card>
+        </Col>
+        <Col xs={24} xl={3}>
+          <Card>
+            <Statistic
+              title={LABELS.WALLET_BALANCE}
+              value={balance}
+              valueStyle={{ color: "#3fBB00" }}
+              precision={2}
+              suffix={name}
             />
           </Card>
         </Col>
@@ -76,7 +116,11 @@ export const BorrowReserveView = () => {
       </Row>
       <Row gutter={GUTTER} style={{ flex: 1 }}>
         <Col xs={24} xl={15}>
-          <BorrowInput className="card-fill" reserve={lendingReserve} />
+          <BorrowInput
+            onCollateralReserve={setCollateralReserveKey}
+            className="card-fill"
+            reserve={lendingReserve}
+          />
         </Col>
         <Col xs={24} xl={9}>
           <SideReserveOverview

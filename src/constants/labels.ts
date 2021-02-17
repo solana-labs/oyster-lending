@@ -34,6 +34,7 @@ export const LABELS = {
   CONNECT_BUTTON: "Connect",
   WALLET_TOOLTIP: "Wallet public key",
   WALLET_BALANCE: "Wallet balance",
+  OYSTER_BALANCE: "Oyster balance",
   SETTINGS_TOOLTIP: "Settings",
   SELECT_COLLATERAL: "Select collateral",
   COLLATERAL: "Collateral",

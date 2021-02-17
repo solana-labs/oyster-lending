@@ -27,6 +27,7 @@ import { notify } from "../../utils/notifications";
 
 export const BorrowInput = (props: {
   className?: string;
+  onCollateralReserve?: (id: string) => void;
   reserve: ParsedAccount<LendingReserve>;
 }) => {
   const connection = useConnection();
@@ -227,6 +228,7 @@ export const BorrowInput = (props: {
                 setLastTyped("collateral");
               }}
               onCollateralReserve={(key) => {
+                if (props.onCollateralReserve) props.onCollateralReserve(key);
                 setCollateralReserveKey(key);
               }}
               useFirstReserve={true}
