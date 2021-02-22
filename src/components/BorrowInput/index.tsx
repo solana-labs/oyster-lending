@@ -11,10 +11,10 @@ import {
   LendingReserveParser,
 } from "../../models";
 import { Card } from "antd";
-import { cache, ParsedAccount } from "../../contexts/accounts";
+import { cache, ParsedAccount, useMint } from "../../contexts/accounts";
 import { useConnection } from "../../contexts/connection";
 import { useWallet } from "../../contexts/wallet";
-import { borrow } from "../../actions";
+import { borrow, deposit } from "../../actions";
 import "./style.less";
 import { LABELS } from "../../constants";
 import { ActionConfirmation } from "./../ActionConfirmation";
@@ -24,6 +24,7 @@ import CollateralInput from "../CollateralInput";
 import { useMidPriceInUSD } from "../../contexts/market";
 import { RiskSlider } from "../RiskSlider";
 import { notify } from "../../utils/notifications";
+import { fromLamports, toLamports } from "../../utils/utils";
 
 export const BorrowInput = (props: {
   className?: string;
@@ -32,7 +33,7 @@ export const BorrowInput = (props: {
 }) => {
   const connection = useConnection();
   const { wallet } = useWallet();
-  const [collateralValue, setCollateralValue] = useState("");
+  const [value, setValue] = useState("");
   const [lastTyped, setLastTyped] = useState("collateral");
   const [pendingTx, setPendingTx] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -49,6 +50,7 @@ export const BorrowInput = (props: {
 
     return cache.get(id) as ParsedAccount<LendingReserve>;
   }, [collateralReserveKey]);
+
   const borrowPrice = useMidPriceInUSD(
     borrowReserve.info.liquidityMint.toBase58()
   ).price;
@@ -65,21 +67,32 @@ export const BorrowInput = (props: {
 
   const { userDeposits: accountBalance } = useUserDeposits(exclude, include);
   const tokenBalance = accountBalance[0]?.info.amount || 0;
+  const {
+    accounts: fromAccountsDeposit,
+    balanceLamports: balanceDepositLamports,
+  } = useUserBalance(collateralReserve?.info.liquidityMint);
+  const mintInfo = useMint(collateralReserve?.info.liquidityMint);
+  const balance = fromLamports(balanceDepositLamports, mintInfo);
 
   const convert = useCallback(
     (val: string | number) => {
-      const minAmount = Math.min(tokenBalance, Infinity);
-      setLastTyped("borrow");
+      const maxAmount = balance + tokenBalance;
+      setLastTyped("collateral");
       if (typeof val === "string") {
-        return (parseFloat(val) / minAmount) * 100;
+        return (parseFloat(val) / maxAmount) * 100;
       } else {
-        return (val * minAmount) / 100;
+        return (val * maxAmount) / 100;
       }
     },
-    [tokenBalance]
+    [tokenBalance, balance]
   );
 
-  const { value, setValue, pct, setPct } = useSliderInput(convert);
+  const {
+    value: collateralValue,
+    setValue: setCollateralValue,
+    pct,
+    setPct,
+  } = useSliderInput(convert);
 
   useEffect(() => {
     if (collateralReserve && lastTyped === "collateral") {
@@ -142,6 +155,21 @@ export const BorrowInput = (props: {
 
     (async () => {
       try {
+        const collateralDifference = toLamports(
+          parseFloat(collateralValue) - tokenBalance,
+          mintInfo
+        );
+        if (collateralDifference > 0) {
+          await deposit(
+            fromAccountsDeposit[0],
+            collateralDifference,
+            collateralReserve.info,
+            collateralReserve.pubkey,
+            connection,
+            wallet
+          );
+        }
+
         await borrow(
           connection,
           wallet,
@@ -182,9 +210,13 @@ export const BorrowInput = (props: {
     wallet,
     value,
     setValue,
+    setCollateralValue,
+    collateralValue,
     collateralReserve,
+    mintInfo,
     borrowReserve,
     fromAccounts,
+    fromAccountsDeposit,
     userObligationsByReserve,
     setPendingTx,
     setShowConfirmation,
