@@ -10,7 +10,7 @@ import {
   LendingReserve,
   LendingReserveParser,
 } from "../../models";
-import { Card } from "antd";
+import { Alert, Card } from "antd";
 import { cache, ParsedAccount, useMint } from "../../contexts/accounts";
 import { useConnection } from "../../contexts/connection";
 import { useWallet } from "../../contexts/wallet";
@@ -94,6 +94,10 @@ export const BorrowInput = (props: {
     setPct,
   } = useSliderInput(convert);
 
+  const collateralDifference = useMemo(() => {
+    return toLamports(parseFloat(collateralValue) - tokenBalance, mintInfo);
+  }, [collateralValue, tokenBalance, mintInfo]);
+
   useEffect(() => {
     if (collateralReserve && lastTyped === "collateral") {
       const ltv = borrowReserve.info.config.loanToValueRatio / 100;
@@ -155,10 +159,6 @@ export const BorrowInput = (props: {
 
     (async () => {
       try {
-        const collateralDifference = toLamports(
-          parseFloat(collateralValue) - tokenBalance,
-          mintInfo
-        );
         if (collateralDifference > 0) {
           await deposit(
             fromAccountsDeposit[0],
@@ -242,6 +242,21 @@ export const BorrowInput = (props: {
             justifyContent: "space-around",
           }}
         >
+          {collateralDifference > 0 && (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+              }}
+            >
+              <Alert
+                message={`${LABELS.NO_ENOUGH_COLLATERAL_MESSAGE}`}
+                type="info"
+              />
+            </div>
+          )}
           <div className="borrow-input-title">{LABELS.BORROW_QUESTION}</div>
           <div
             style={{

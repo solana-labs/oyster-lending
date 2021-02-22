@@ -102,6 +102,8 @@ export const LABELS = {
   LEVERAGE_LIMIT_MESSAGE: "You will need more margin to make this trade.",
   NO_DEPOSIT_MESSAGE:
     "You need to deposit coin of this type into oyster before trading with it on margin.",
+  NO_ENOUGH_COLLATERAL_MESSAGE:
+    "The Collateral is greater than your Oyster Balance. The difference will be deposited first.",
   NO_COLL_TYPE_MESSAGE: "Choose Collateral CCY",
   SAFER: "Safer",
   RISKIER: "Riskier",
