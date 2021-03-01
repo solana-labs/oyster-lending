@@ -29,8 +29,8 @@ import { TOKEN_PROGRAM_ID, LENDING_PROGRAM_ID } from "../../utils/ids";
 ///   14 `[]` Token program id
 export const liquidateInstruction = (
   liquidityAmount: number | BN,
-  from: PublicKey, // Liquidity input SPL Token account. $authority can transfer $liquidity_amount
-  to: PublicKey, // Collateral output SPL Token account,
+  from: PublicKey,
+  to: PublicKey,
   repayReserveAccount: PublicKey,
   repayReserveLiquiditySupply: PublicKey,
   withdrawReserve: PublicKey,
@@ -41,7 +41,7 @@ export const liquidateInstruction = (
   transferAuthority: PublicKey,
   dexMarket: PublicKey,
   dexOrderBookSide: PublicKey,
-  memory: PublicKey
+  memory: PublicKey,
 ): TransactionInstruction => {
   const dataLayout = BufferLayout.struct([
     BufferLayout.u8("instruction"),
@@ -60,28 +60,21 @@ export const liquidateInstruction = (
   const keys = [
     { pubkey: from, isSigner: false, isWritable: true },
     { pubkey: to, isSigner: false, isWritable: true },
-
     { pubkey: repayReserveAccount, isSigner: false, isWritable: true },
     { pubkey: repayReserveLiquiditySupply, isSigner: false, isWritable: true },
-
     { pubkey: withdrawReserve, isSigner: false, isWritable: false },
     {
       pubkey: withdrawReserveCollateralSupply,
       isSigner: false,
       isWritable: true,
     },
-
     { pubkey: obligation, isSigner: false, isWritable: true },
-
     { pubkey: lendingMarket, isSigner: false, isWritable: false },
     { pubkey: authority, isSigner: false, isWritable: false },
     { pubkey: transferAuthority, isSigner: true, isWritable: false },
-
     { pubkey: dexMarket, isSigner: false, isWritable: false },
     { pubkey: dexOrderBookSide, isSigner: false, isWritable: false },
-
     { pubkey: memory, isSigner: false, isWritable: false },
-
     { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
     { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
   ];

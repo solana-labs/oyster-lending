@@ -42,29 +42,23 @@ export enum BorrowAmountType {
 export const borrowInstruction = (
   amount: number | BN,
   amountType: BorrowAmountType,
-  from: PublicKey, // Collateral input SPL Token account. $authority can transfer $collateralAmount
-  to: PublicKey, // Liquidity output SPL Token account,
+  from: PublicKey,
+  to: PublicKey,
   depositReserve: PublicKey,
   depositReserveCollateralSupply: PublicKey,
   ownerFeeReceiver: PublicKey,
-
   borrowReserve: PublicKey,
   borrowReserveLiquiditySupply: PublicKey,
-
   obligation: PublicKey,
   obligationMint: PublicKey,
   obligationTokenOutput: PublicKey,
-
   lendingMarket: PublicKey,
   lendingMarketAuthority: PublicKey,
   transferAuthority: PublicKey,
-
   dexMarket: PublicKey,
   dexOrderBookSide: PublicKey,
-
   memory: PublicKey,
-
-  hostFeeReceiver?: PublicKey
+  hostFeeReceiver?: PublicKey,
 ): TransactionInstruction => {
   const dataLayout = BufferLayout.struct([
     BufferLayout.u8("instruction"),
@@ -92,7 +86,6 @@ export const borrowInstruction = (
       isWritable: true,
     },
     { pubkey: ownerFeeReceiver, isSigner: false, isWritable: true },
-
     { pubkey: borrowReserve, isSigner: false, isWritable: true },
     {
       pubkey: borrowReserveLiquiditySupply,
@@ -102,11 +95,9 @@ export const borrowInstruction = (
     { pubkey: obligation, isSigner: false, isWritable: true },
     { pubkey: obligationMint, isSigner: false, isWritable: true },
     { pubkey: obligationTokenOutput, isSigner: false, isWritable: true },
-
     { pubkey: lendingMarket, isSigner: false, isWritable: false },
     { pubkey: lendingMarketAuthority, isSigner: false, isWritable: false },
     { pubkey: transferAuthority, isSigner: true, isWritable: false },
-
     { pubkey: dexMarket, isSigner: false, isWritable: false },
     { pubkey: dexOrderBookSide, isSigner: false, isWritable: false },
     { pubkey: memory, isSigner: false, isWritable: false },

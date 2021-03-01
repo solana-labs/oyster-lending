@@ -169,10 +169,8 @@ export const LendingReserveParser = (
 export const initReserveInstruction = (
   liquidityAmount: number | BN,
   maxUtilizationRate: number,
-
-  from: PublicKey, // Liquidity input SPL Token account. $authority can transfer $liquidity_amount
-  to: PublicKey, // Collateral output SPL Token account,
-
+  from: PublicKey,
+  to: PublicKey,
   reserveAccount: PublicKey,
   liquidityMint: PublicKey,
   liquiditySupply: PublicKey,
@@ -192,7 +190,7 @@ export const initReserveInstruction = (
   const data = Buffer.alloc(dataLayout.span);
   dataLayout.encode(
     {
-      instruction: LendingInstruction.InitReserve, // Init reserve instruction
+      instruction: LendingInstruction.InitReserve,
       liquidityAmount: new BN(liquidityAmount),
       maxUtilizationRate: maxUtilizationRate,
     },
@@ -207,7 +205,6 @@ export const initReserveInstruction = (
     { pubkey: liquiditySupply, isSigner: false, isWritable: true },
     { pubkey: collateralMint, isSigner: false, isWritable: true },
     { pubkey: collateralSupply, isSigner: false, isWritable: true },
-
     // NOTE: Why lending market needs to be a signer?
     { pubkey: lendingMarket, isSigner: true, isWritable: true },
     { pubkey: lendingMarketAuthority, isSigner: false, isWritable: false },

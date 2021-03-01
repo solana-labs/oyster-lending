@@ -90,7 +90,7 @@ export const initObligationInstruction = (
   obligationTokenOutput: PublicKey,
   obligationTokenOwner: PublicKey,
   lendingMarket: PublicKey,
-  lendingMarketAuthority: PublicKey
+  lendingMarketAuthority: PublicKey,
 ): TransactionInstruction => {
   const dataLayout = BufferLayout.struct([BufferLayout.u8("instruction")]);
 
@@ -109,10 +109,8 @@ export const initObligationInstruction = (
     { pubkey: obligationMint, isSigner: false, isWritable: true },
     { pubkey: obligationTokenOutput, isSigner: false, isWritable: true },
     { pubkey: obligationTokenOwner, isSigner: false, isWritable: false },
-
     { pubkey: lendingMarket, isSigner: false, isWritable: false },
     { pubkey: lendingMarketAuthority, isSigner: false, isWritable: false },
-
     { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
     { pubkey: SYSVAR_RENT_PUBKEY, isSigner: false, isWritable: false },
     { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },

@@ -23,14 +23,14 @@ import { LendingInstruction } from "./lending";
 ///   8. '[]` Token program id
 export const withdrawInstruction = (
   collateralAmount: number | BN,
-  from: PublicKey, // Collateral input SPL Token account. $authority can transfer $liquidity_amount
-  to: PublicKey, // Liquidity output SPL Token account,
+  from: PublicKey,
+  to: PublicKey,
   reserveAccount: PublicKey,
   collateralMint: PublicKey,
   reserveSupply: PublicKey,
   lendingMarket: PublicKey,
   authority: PublicKey,
-  transferAuthority: PublicKey
+  transferAuthority: PublicKey,
 ): TransactionInstruction => {
   const dataLayout = BufferLayout.struct([
     BufferLayout.u8("instruction"),
