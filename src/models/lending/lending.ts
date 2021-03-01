@@ -8,6 +8,8 @@ export enum LendingInstruction {
   RepayObligationLiquidity = 6,
   LiquidateObligation = 7,
   AccrueReserveInterest = 8,
+  DepositObligationCollateral = 9,
+  WithdrawObligationCollateral = 10,
 }
 
 export const TransactionListLookup: { [key: number]: string } = {
@@ -16,4 +18,6 @@ export const TransactionListLookup: { [key: number]: string } = {
   5: "Borrow",
   6: "Repay",
   7: "Liquidate",
+  9: "DepositObligationCollateral",
+  10: "WithdrawObligationCollateral",
 };

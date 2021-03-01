@@ -5,3 +5,5 @@ export * from "./lending";
 export * from "./borrow";
 export * from "./deposit";
 export * from "./withdraw";
+export * from "./depositObligationCollateral";
+export * from "./withdrawObligationCollateral";
