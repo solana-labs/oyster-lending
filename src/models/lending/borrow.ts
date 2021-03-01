@@ -23,19 +23,22 @@ export enum BorrowAmountType {
 ///   1. `[writable]` Destination liquidity token account, minted by borrow reserve liquidity mint
 ///   2. `[]` Deposit reserve account.
 ///   3. `[writable]` Deposit reserve collateral supply SPL Token account
-///   4. `[writable]` Borrow reserve account.
-///   5. `[writable]` Borrow reserve liquidity supply SPL Token account
-///   6. `[writable]` Obligation
-///   7. `[writable]` Obligation token mint
-///   8. `[writable]` Obligation token output
-///   8 `[]` Lending market account.
-///   10 `[]` Derived lending market authority.
-///   11 `[]` User transfer authority ($authority).
-///   12 `[]` Dex market
-///   13 `[]` Dex market order book side
-///   14 `[]` Temporary memory
-///   15 `[]` Clock sysvar
-///   16 '[]` Token program id
+///   4. `[writable]` Deposit reserve collateral fee receiver account.
+///                     Must be the fee account specified at InitReserve.
+///   5. `[writable]` Borrow reserve account.
+///   6. `[writable]` Borrow reserve liquidity supply SPL Token account
+///   7. `[writable]` Obligation
+///   8. `[writable]` Obligation token mint
+///   9. `[writable]` Obligation token output
+///   10 `[]` Lending market account.
+///   11 `[]` Derived lending market authority.
+///   12 `[]` User transfer authority ($authority).
+///   13 `[]` Dex market
+///   14 `[]` Dex market order book side
+///   15 `[]` Temporary memory
+///   16 `[]` Clock sysvar
+///   17 '[]` Token program id
+///   18 `[optional, writable]` Deposit reserve collateral host fee receiver account.
 export const borrowInstruction = (
   amount: number | BN,
   amountType: BorrowAmountType,

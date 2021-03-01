@@ -14,9 +14,9 @@ import { TOKEN_PROGRAM_ID, LENDING_PROGRAM_ID } from "../../utils/ids";
 ///   0. `[writable]` Source liquidity token account, minted by repay reserve liquidity mint
 ///                     $authority can transfer $collateral_amount
 ///   1. `[writable]` Destination collateral token account, minted by withdraw reserve collateral mint
-///   2. `[]` Repay reserve account.
+///   2. `[writable]` Repay reserve account.
 ///   3. `[writable]` Repay reserve liquidity supply SPL Token account
-///   4. `[writable]` Withdraw reserve account.
+///   4. `[]` Withdraw reserve account.
 ///   5. `[writable]` Withdraw reserve collateral supply SPL Token account
 ///   6. `[writable]` Obligation - initialized
 ///   7. `[]` Lending market account.

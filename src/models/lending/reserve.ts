@@ -146,6 +146,26 @@ export const LendingReserveParser = (
   return details;
 };
 
+/// Initializes a new lending market reserve.
+///
+///   0. `[writable]` Source liquidity token account.  $authority can transfer $liquidity_amount
+///   1. `[writable]` Destination collateral token account - uninitialized
+///   2. `[writable]` Reserve account.
+///   3. `[]` Reserve liquidity SPL Token mint
+///   4. `[writable]` Reserve liquidity supply SPL Token account - uninitialized
+///   5. `[writable]` Reserve collateral SPL Token mint - uninitialized
+///   6. `[writable]` Reserve collateral token supply - uninitialized
+///   7. `[writable]` Reserve collateral fees receiver - uninitialized.
+///                     Owner will be set to the lending market account.
+///   8. `[]` Lending market account.
+///   9. `[signer]` Lending market owner.
+///   10 `[]` Derived lending market authority.
+///   11 `[]` User transfer authority ($authority).
+///   12 `[]` Clock sysvar
+///   13 `[]` Rent sysvar
+///   14 '[]` Token program id
+///   15 `[optional]` Serum DEX market account. Not required for quote currency reserves.
+///                     Must be initialized and match quote and base currency.
 export const initReserveInstruction = (
   liquidityAmount: number | BN,
   maxUtilizationRate: number,
@@ -207,6 +227,11 @@ export const initReserveInstruction = (
   });
 };
 
+/// Accrue interest on reserves
+///
+///   0. `[]` Clock sysvar
+///   1. `[writable]` Reserve account.
+///   .. `[writable]` Additional reserve accounts.
 export const accrueInterestInstruction = (
   ...reserveAccount: PublicKey[]
 ): TransactionInstruction => {

@@ -9,6 +9,18 @@ import { TOKEN_PROGRAM_ID, LENDING_PROGRAM_ID } from "../../utils/ids";
 import * as Layout from "./../../utils/layout";
 import { LendingInstruction } from "./lending";
 
+/// Withdraw tokens from a reserve. The input is a collateral token representing ownership
+/// of the reserve liquidity pool.
+///
+///   0. `[writable]` Source collateral token account. $authority can transfer $collateral_amount
+///   1. `[writable]` Destination liquidity token account.
+///   2. `[writable]` Reserve account.
+///   3. `[writable]` Reserve collateral SPL Token mint.
+///   4. `[writable]` Reserve liquidity supply SPL Token account.
+///   5. `[]` Lending market account.
+///   6. `[]` Derived lending market authority.
+///   7. `[]` User transfer authority ($authority).
+///   8. '[]` Token program id
 export const withdrawInstruction = (
   collateralAmount: number | BN,
   from: PublicKey, // Collateral input SPL Token account. $authority can transfer $liquidity_amount
