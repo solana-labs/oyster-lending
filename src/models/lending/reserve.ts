@@ -168,6 +168,7 @@ export const LendingReserveParser = (
 ///                     Must be initialized and match quote and base currency.
 export const initReserveInstruction = (
   liquidityAmount: number | BN,
+  // NOTE: InitReserve accepts ReserveConfig as second arg
   maxUtilizationRate: number,
   from: PublicKey,
   to: PublicKey,
