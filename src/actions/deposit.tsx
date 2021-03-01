@@ -106,12 +106,12 @@ export const deposit = async (
         amountLamports,
         fromAccount,
         toAccount,
+        reserveAddress,
+        reserve.liquiditySupply,
+        reserve.collateralMint,
         reserve.lendingMarket,
         authority,
         transferAuthority.publicKey,
-        reserveAddress,
-        reserve.liquiditySupply,
-        reserve.collateralMint
       )
     );
   } else {
