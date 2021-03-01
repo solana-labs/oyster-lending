@@ -181,8 +181,7 @@ export const initReserveInstruction = (
   lendingMarket: PublicKey,
   lendingMarketAuthority: PublicKey,
   transferAuthority: PublicKey,
-
-  dexMarket: PublicKey // TODO: optional
+  dexMarket?: PublicKey,
 ): TransactionInstruction => {
   const dataLayout = BufferLayout.struct([
     BufferLayout.u8("instruction"),
@@ -216,10 +215,12 @@ export const initReserveInstruction = (
     { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
     { pubkey: SYSVAR_RENT_PUBKEY, isSigner: false, isWritable: false },
     { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
-
-    // optionals
-    { pubkey: dexMarket, isSigner: false, isWritable: false },
   ];
+
+  if (dexMarket) {
+    keys.push({ pubkey: dexMarket, isSigner: false, isWritable: false });
+  }
+
   return new TransactionInstruction({
     keys,
     programId: LENDING_PROGRAM_ID,
