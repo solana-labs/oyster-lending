@@ -69,6 +69,19 @@ export const healthFactorToRiskColor = (health: number) => {
   return "";
 };
 
+/// Initializes a new loan obligation.
+///
+///   0. `[]` Deposit reserve account.
+///   1. `[]` Borrow reserve account.
+///   2. `[writable]` Obligation
+///   3. `[writable]` Obligation token mint
+///   4. `[writable]` Obligation token output
+///   5. `[]` Obligation token owner
+///   6. `[]` Lending market account.
+///   7. `[]` Derived lending market authority.
+///   8. `[]` Clock sysvar
+///   9. `[]` Rent sysvar
+///   10 '[]` Token program id
 export const initObligationInstruction = (
   depositReserve: PublicKey,
   borrowReserve: PublicKey,
@@ -77,7 +90,7 @@ export const initObligationInstruction = (
   obligationTokenOutput: PublicKey,
   obligationTokenOwner: PublicKey,
   lendingMarket: PublicKey,
-  lendingMarketAuthority: PublicKey
+  lendingMarketAuthority: PublicKey,
 ): TransactionInstruction => {
   const dataLayout = BufferLayout.struct([BufferLayout.u8("instruction")]);
 
@@ -96,10 +109,8 @@ export const initObligationInstruction = (
     { pubkey: obligationMint, isSigner: false, isWritable: true },
     { pubkey: obligationTokenOutput, isSigner: false, isWritable: true },
     { pubkey: obligationTokenOwner, isSigner: false, isWritable: false },
-
     { pubkey: lendingMarket, isSigner: false, isWritable: false },
     { pubkey: lendingMarketAuthority, isSigner: false, isWritable: false },
-
     { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
     { pubkey: SYSVAR_RENT_PUBKEY, isSigner: false, isWritable: false },
     { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },

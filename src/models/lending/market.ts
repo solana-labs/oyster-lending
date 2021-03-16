@@ -45,5 +45,10 @@ export const LendingMarketParser = (
   return details;
 };
 
-// TODO:
-// create instructions for init
+// TODO: create instructions for init
+/// Initializes a new lending market.
+///
+///   0. `[writable]` Lending market account.
+///   1. `[]` Quote currency SPL Token mint. Must be initialized.
+///   2. `[]` Rent sysvar
+///   3. '[]` Token program id

@@ -23,45 +23,42 @@ export enum BorrowAmountType {
 ///   1. `[writable]` Destination liquidity token account, minted by borrow reserve liquidity mint
 ///   2. `[]` Deposit reserve account.
 ///   3. `[writable]` Deposit reserve collateral supply SPL Token account
-///   4. `[writable]` Borrow reserve account.
-///   5. `[writable]` Borrow reserve liquidity supply SPL Token account
-///   6. `[writable]` Obligation
-///   7. `[writable]` Obligation token mint
-///   8. `[writable]` Obligation token output
-///   8 `[]` Lending market account.
-///   10 `[]` Derived lending market authority.
-///   11 `[]` User transfer authority ($authority).
-///   12 `[]` Dex market
-///   13 `[]` Dex market order book side
-///   14 `[]` Temporary memory
-///   15 `[]` Clock sysvar
-///   16 '[]` Token program id
+///   4. `[writable]` Deposit reserve collateral fee receiver account.
+///                     Must be the fee account specified at InitReserve.
+///   5. `[writable]` Borrow reserve account.
+///   6. `[writable]` Borrow reserve liquidity supply SPL Token account
+///   7. `[writable]` Obligation
+///   8. `[writable]` Obligation token mint
+///   9. `[writable]` Obligation token output
+///   10 `[]` Lending market account.
+///   11 `[]` Derived lending market authority.
+///   12 `[]` User transfer authority ($authority).
+///   13 `[]` Dex market
+///   14 `[]` Dex market order book side
+///   15 `[]` Temporary memory
+///   16 `[]` Clock sysvar
+///   17 '[]` Token program id
+///   18 `[optional, writable]` Deposit reserve collateral host fee receiver account.
 export const borrowInstruction = (
   amount: number | BN,
   amountType: BorrowAmountType,
-  from: PublicKey, // Collateral input SPL Token account. $authority can transfer $collateralAmount
-  to: PublicKey, // Liquidity output SPL Token account,
+  from: PublicKey,
+  to: PublicKey,
   depositReserve: PublicKey,
   depositReserveCollateralSupply: PublicKey,
   ownerFeeReceiver: PublicKey,
-
   borrowReserve: PublicKey,
   borrowReserveLiquiditySupply: PublicKey,
-
   obligation: PublicKey,
   obligationMint: PublicKey,
   obligationTokenOutput: PublicKey,
-
   lendingMarket: PublicKey,
   lendingMarketAuthority: PublicKey,
   transferAuthority: PublicKey,
-
   dexMarket: PublicKey,
   dexOrderBookSide: PublicKey,
-
   memory: PublicKey,
-
-  hostFeeReceiver?: PublicKey
+  hostFeeReceiver?: PublicKey,
 ): TransactionInstruction => {
   const dataLayout = BufferLayout.struct([
     BufferLayout.u8("instruction"),
@@ -89,7 +86,6 @@ export const borrowInstruction = (
       isWritable: true,
     },
     { pubkey: ownerFeeReceiver, isSigner: false, isWritable: true },
-
     { pubkey: borrowReserve, isSigner: false, isWritable: true },
     {
       pubkey: borrowReserveLiquiditySupply,
@@ -99,11 +95,9 @@ export const borrowInstruction = (
     { pubkey: obligation, isSigner: false, isWritable: true },
     { pubkey: obligationMint, isSigner: false, isWritable: true },
     { pubkey: obligationTokenOutput, isSigner: false, isWritable: true },
-
     { pubkey: lendingMarket, isSigner: false, isWritable: false },
     { pubkey: lendingMarketAuthority, isSigner: false, isWritable: false },
     { pubkey: transferAuthority, isSigner: true, isWritable: false },
-
     { pubkey: dexMarket, isSigner: false, isWritable: false },
     { pubkey: dexOrderBookSide, isSigner: false, isWritable: false },
     { pubkey: memory, isSigner: false, isWritable: false },

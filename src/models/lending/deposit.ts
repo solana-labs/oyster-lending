@@ -26,14 +26,14 @@ import { calculateUtilizationRatio, LendingReserve } from "./reserve";
 ///   9. '[]` Token program id
 export const depositInstruction = (
   liquidityAmount: number | BN,
-  from: PublicKey, // Liquidity input SPL Token account. $authority can transfer $liquidity_amount
-  to: PublicKey, // Collateral output SPL Token account,
+  from: PublicKey,
+  to: PublicKey,
+  reserveAccount: PublicKey,
+  reserveSupply: PublicKey,
+  collateralMint: PublicKey,
   lendingMarket: PublicKey,
   reserveAuthority: PublicKey,
   transferAuthority: PublicKey,
-  reserveAccount: PublicKey,
-  reserveSupply: PublicKey,
-  collateralMint: PublicKey
 ): TransactionInstruction => {
   const dataLayout = BufferLayout.struct([
     BufferLayout.u8("instruction"),
