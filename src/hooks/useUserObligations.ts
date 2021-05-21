@@ -27,7 +27,7 @@ export function useUserObligations() {
       .map((ob) => {
         return {
           obligation: ob,
-          userAccounts: [...accountsByMint.get(ob.info.tokenMint.toBase58())],
+          userAccounts: [...accountsByMint.get(ob.info.tokenMint.toBase58())!],
         };
       })
       .sort(
