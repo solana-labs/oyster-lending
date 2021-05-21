@@ -18,21 +18,12 @@ export type ENV =
   | "mainnet-beta"
   | "testnet"
   | "devnet"
-  | "localnet"
-  | "lending";
+  | "localnet";
 
 export const ENDPOINTS = [
   {
     name: "mainnet-beta" as ENV,
     endpoint: "https://solana-api.projectserum.com/",
-  },
-  {
-    name: "Oyster Dev" as ENV,
-    endpoint: "http://oyster-dev.solana.com/",
-  },
-  {
-    name: "Lending" as ENV,
-    endpoint: "https://tln.solana.com/",
   },
   { name: "testnet" as ENV, endpoint: clusterApiUrl("testnet") },
   { name: "devnet" as ENV, endpoint: clusterApiUrl("devnet") },
