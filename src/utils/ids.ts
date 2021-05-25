@@ -9,7 +9,7 @@ export let TOKEN_PROGRAM_ID = new PublicKey(
 );
 
 export let LENDING_PROGRAM_ID = new PublicKey(
-  "TokenLending1111111111111111111111111111111"
+  "Fo1J5WWXeuD6t8sDXLDDRjrjA8FwB9VizV19CfutRU48"
 );
 
 let SWAP_PROGRAM_ID: PublicKey;
@@ -72,14 +72,12 @@ export const PROGRAM_IDS = [
 ];
 
 export const setProgramIds = (envName: string) => {
-  if (envName === "mainnet-beta") {
+  if (envName === "devnet") {
     LENDING_PROGRAM_ID = new PublicKey(
-      "LendZqTs7gn5CTSJU1jWKhKuVpjJGom45nnwPb2AMTi"
+      "Fo1J5WWXeuD6t8sDXLDDRjrjA8FwB9VizV19CfutRU48"
     );
-  } else if (envName === "Lending") {
-    LENDING_PROGRAM_ID = new PublicKey(
-      "TokenLending1111111111111111111111111111111"
-    );
+  } else {
+    throw new Error("only devnet supported currently");
   }
 
   let instance = PROGRAM_IDS.find((env) => env.name === envName);

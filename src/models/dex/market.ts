@@ -21,7 +21,7 @@ export const OrderBookParser = (id: PublicKey, acc: AccountInfo<Buffer>) => {
 };
 
 const DEFAULT_DEX_ID = new PublicKey(
-  "9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"
+  "DESVgJVGajEgKGXhb6XmqDHGz3VjdgP7rEVESBgxmroY"
 );
 
 export const DexMarketParser = (

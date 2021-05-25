@@ -20,7 +20,7 @@ import { DexMarketParser } from "./../models/dex";
 import { LendingMarket, LendingReserve, PoolInfo } from "../models";
 import { LIQUIDITY_PROVIDER_FEE, SERUM_FEE } from "../utils/pools";
 
-const INITAL_LIQUIDITY_DATE = new Date("2020-10-27");
+const INITAL_LIQUIDITY_DATE = new Date("2021-03-24");
 export const BONFIDA_POOL_INTERVAL = 30 * 60_000; // 30 min
 
 interface RecentPoolData {
@@ -54,9 +54,10 @@ export function MarketProvider({ children = null as any }) {
     new Map()
   );
 
-  const connection = useMemo(() => new Connection(endpoint, "recent"), [
-    endpoint,
-  ]);
+  const connection = useMemo(
+    () => new Connection(endpoint, "recent"),
+    [endpoint]
+  );
 
   const marketByMint = useMemo(() => {
     return [...new Set(marketMints).values()].reduce((acc, key) => {
@@ -67,7 +68,7 @@ export function MarketProvider({ children = null as any }) {
       );
 
       const marketAddress = MINT_TO_MARKET[mintAddress];
-      const marketName = `${SERUM_TOKEN?.name}/USDC`;
+      const marketName = `${SERUM_TOKEN?.name}/USDT`;
       const marketInfo = MARKETS.find(
         (m) => m.name === marketName || m.address.toBase58() === marketAddress
       );
@@ -527,9 +528,9 @@ export const simulateMarketOrderFill = (
   const quoteMintDecimals =
     cache.get(decodedMarket.quoteMint)?.info.decimals || 0;
 
-  const lendingMarket = cache.get(reserve.lendingMarket) as ParsedAccount<
-    LendingMarket
-  >;
+  const lendingMarket = cache.get(
+    reserve.lendingMarket
+  ) as ParsedAccount<LendingMarket>;
 
   const dexMarket = new Market(
     decodedMarket,
