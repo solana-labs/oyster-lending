@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "./static/css/main.653f2d37.chunk.css",
-    "main.js": "./static/js/main.eb85c669.chunk.js",
+    "main.css": "./static/css/main.8000100e.chunk.css",
+    "main.js": "./static/js/main.f5730a92.chunk.js",
     "runtime-main.js": "./static/js/runtime-main.0ad816d2.js",
-    "static/css/2.d1dfd3d6.chunk.css": "./static/css/2.d1dfd3d6.chunk.css",
-    "static/js/2.39534a94.chunk.js": "./static/js/2.39534a94.chunk.js",
+    "static/css/2.5f44bebf.chunk.css": "./static/css/2.5f44bebf.chunk.css",
+    "static/js/2.8ac85190.chunk.js": "./static/js/2.8ac85190.chunk.js",
     "index.html": "./index.html",
-    "precache-manifest.46fc5a04f512f8cb082cc5e848be55e9.js": "./precache-manifest.46fc5a04f512f8cb082cc5e848be55e9.js",
+    "precache-manifest.2bfd516c30fd5bf128ec2b6b55b35585.js": "./precache-manifest.2bfd516c30fd5bf128ec2b6b55b35585.js",
     "service-worker.js": "./service-worker.js",
-    "static/js/2.39534a94.chunk.js.LICENSE.txt": "./static/js/2.39534a94.chunk.js.LICENSE.txt",
+    "static/js/2.8ac85190.chunk.js.LICENSE.txt": "./static/js/2.8ac85190.chunk.js.LICENSE.txt",
     "static/media/ledger.svg": "./static/media/ledger.1c9e553b.svg",
     "static/media/mathwallet.svg": "./static/media/mathwallet.0b4a504a.svg",
     "static/media/solflare.svg": "./static/media/solflare.26e1b240.svg",
@@ -16,9 +16,9 @@
   },
   "entrypoints": [
     "static/js/runtime-main.0ad816d2.js",
-    "static/css/2.d1dfd3d6.chunk.css",
-    "static/js/2.39534a94.chunk.js",
-    "static/css/main.653f2d37.chunk.css",
-    "static/js/main.eb85c669.chunk.js"
+    "static/css/2.5f44bebf.chunk.css",
+    "static/js/2.8ac85190.chunk.js",
+    "static/css/main.8000100e.chunk.css",
+    "static/js/main.f5730a92.chunk.js"
   ]
 }
