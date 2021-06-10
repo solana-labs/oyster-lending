@@ -21,6 +21,7 @@ import solongIcon from "../icons/solong.png";
 import solflareIcon from "../icons/solflare.svg";
 import mathwalletIcon from "../icons/mathwallet.svg";
 import ledgerIcon from "../icons/ledger.svg";
+import zelcoreIcon from "../icons/zelcore.svg";
 
 export const WALLET_PROVIDERS = [
   {
@@ -49,6 +50,11 @@ export const WALLET_PROVIDERS = [
     url: "https://www.ledger.com",
     icon: ledgerIcon,
     adapter: LedgerWalletAdapter,
+  },
+  {
+    name: "Zelcore",
+    url: "https://link.zelcore.io",
+    icon: zelcoreIcon,
   },
 ];
 
