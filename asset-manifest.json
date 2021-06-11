@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "./static/css/main.8000100e.chunk.css",
-    "main.js": "./static/js/main.f5730a92.chunk.js",
+    "main.js": "./static/js/main.482e2f45.chunk.js",
     "runtime-main.js": "./static/js/runtime-main.0ad816d2.js",
     "static/css/2.5f44bebf.chunk.css": "./static/css/2.5f44bebf.chunk.css",
-    "static/js/2.8ac85190.chunk.js": "./static/js/2.8ac85190.chunk.js",
+    "static/js/2.c35cac9e.chunk.js": "./static/js/2.c35cac9e.chunk.js",
     "index.html": "./index.html",
-    "precache-manifest.2bfd516c30fd5bf128ec2b6b55b35585.js": "./precache-manifest.2bfd516c30fd5bf128ec2b6b55b35585.js",
+    "precache-manifest.2743f19056bdff490b64cc7c2401e060.js": "./precache-manifest.2743f19056bdff490b64cc7c2401e060.js",
     "service-worker.js": "./service-worker.js",
-    "static/js/2.8ac85190.chunk.js.LICENSE.txt": "./static/js/2.8ac85190.chunk.js.LICENSE.txt",
+    "static/js/2.c35cac9e.chunk.js.LICENSE.txt": "./static/js/2.c35cac9e.chunk.js.LICENSE.txt",
     "static/media/ledger.svg": "./static/media/ledger.1c9e553b.svg",
     "static/media/mathwallet.svg": "./static/media/mathwallet.0b4a504a.svg",
     "static/media/solflare.svg": "./static/media/solflare.26e1b240.svg",
@@ -17,8 +17,8 @@
   "entrypoints": [
     "static/js/runtime-main.0ad816d2.js",
     "static/css/2.5f44bebf.chunk.css",
-    "static/js/2.8ac85190.chunk.js",
+    "static/js/2.c35cac9e.chunk.js",
     "static/css/main.8000100e.chunk.css",
-    "static/js/main.f5730a92.chunk.js"
+    "static/js/main.482e2f45.chunk.js"
   ]
 }
