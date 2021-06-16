@@ -51,12 +51,6 @@ export const WALLET_PROVIDERS = [
     icon: ledgerIcon,
     adapter: LedgerWalletAdapter,
   },
-  {
-    name: "Phantom",
-    url: "https://phantom.app/",
-    icon: `https://raydium.io/_nuxt/img/phantom.d9e3c61.png`,
-    adapter: PhantomWalletAdapter,
-  },
 ];
 
 export interface WalletAdapter extends EventEmitter {
