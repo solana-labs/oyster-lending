@@ -16,6 +16,7 @@ import { useConnectionConfig } from "./connection";
 import { useLocalStorageState } from "./../utils/utils";
 import { LedgerWalletAdapter } from "../wallet-adapters/ledger";
 import { SolongWalletAdapter } from "../wallet-adapters/solong";
+import { PhantomWalletAdapter } from "../wallet-adapters/phantom";
 import solletIcon from "../icons/sollet.svg";
 import solongIcon from "../icons/solong.png";
 import solflareIcon from "../icons/solflare.svg";
@@ -49,6 +50,12 @@ export const WALLET_PROVIDERS = [
     url: "https://www.ledger.com",
     icon: ledgerIcon,
     adapter: LedgerWalletAdapter,
+  },
+  {
+    name: "Phantom",
+    url: "https://phantom.app/",
+    icon: `https://raydium.io/_nuxt/img/phantom.d9e3c61.png`,
+    adapter: PhantomWalletAdapter,
   },
 ];
 
